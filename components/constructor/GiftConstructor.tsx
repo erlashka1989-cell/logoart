@@ -40,7 +40,7 @@ function Progress() {
   );
 
   return (
-    <div className="mb-5 -translate-y-4">
+    <div className="mb-10 -translate-y-4">
       <div className="mb-3 flex items-center justify-between text-sm">
         <span className="font-medium">
           Шаг {currentStep} из 6
@@ -90,7 +90,7 @@ function AudienceStep() {
       title="Для кого создаём подарок?"
       description="Можно выбрать несколько вариантов."
     >
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2 -translate-y-4">
         {AUDIENCE_OPTIONS.map((item) => (
           <SelectionCard
             key={item.id}
