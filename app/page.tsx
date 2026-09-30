@@ -7,20 +7,24 @@ export default function HomePage() {
       id="top"
       className="min-h-screen bg-[#f7f7f5] text-neutral-950"
     >
-      {/* HEADER */}
+      {/* =========================
+          HEADER
+      ========================= */}
       <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5">
+          {/* LOGO */}
           <a
-  href="#top"
-  className="flex items-center"
->
-  <img
-    src="/images/Logo.png"
-    alt="LogoART"
-    className="h-14 w-auto object-contain"
-  />
-</a>
+            href="#top"
+            className="flex items-center"
+          >
+            <img
+              src="/images/Logo.png"
+              alt="LogoART"
+              className="h-14 w-auto object-contain"
+            />
+          </a>
 
+          {/* NAVIGATION */}
           <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
             <a
               href="#constructor"
@@ -58,6 +62,7 @@ export default function HomePage() {
             </a>
           </nav>
 
+          {/* HEADER BUTTON */}
           <a
             href="#constructor"
             className="rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
@@ -67,7 +72,9 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* HERO */}
+      {/* =========================
+          HERO
+      ========================= */}
       <section
         className="relative min-h-[560px] overflow-hidden bg-cover bg-center bg-no-repeat"
         style={{
@@ -134,9 +141,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* giftsets */}
-      
-      {/* ПОДАРОЧНЫЕ НАБОРЫ */}
+      {/* =========================
+          ПОДАРОЧНЫЕ НАБОРЫ
+      ========================= */}
       <section
         id="giftsets"
         className="border-t border-neutral-200 bg-white"
@@ -152,7 +159,8 @@ export default function HomePage() {
             </h2>
 
             <p className="mt-3 text-lg leading-8 text-neutral-500">
-              Выберите готовый вариант — мы адаптируем его под ваш бренд, цвет и тираж.
+              Выберите готовый вариант — мы адаптируем его под ваш бренд,
+              цвет и тираж.
             </p>
           </div>
 
@@ -178,10 +186,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CONSTRUCTOR */}
+      {/* =========================
+          CONSTRUCTOR
+      ========================= */}
       <GiftConstructor />
 
-      {/* PORTFOLIO */}
+      {/* =========================
+          PORTFOLIO
+      ========================= */}
       <section
         id="portfolio"
         className="border-t border-neutral-200 bg-white"
@@ -204,47 +216,52 @@ export default function HomePage() {
           </div>
 
           <div className="mt-2 grid gap-5 md:grid-cols-3">
+            {/* СТАТУЭТКИ */}
             <PortfolioCard
               title="Статуэтки"
               image="/images/portfolio1.jpg"
               detailsImages={[
-              "/images/portfolio1-2.jpg",
-              "/images/portfolio1-3.jpg",
-              "/images/portfolio1-4.jpg",
+                "/images/portfolio1-2.jpg",
+                "/images/portfolio1-3.jpg",
+                "/images/portfolio1-4.jpg",
               ]}
               video="/images/portfolio1.mp4"
               action="details"
               description="Индивидуальные награды и премиальные корпоративные изделия."
             />
 
+            {/* CORPORATE GIFTS */}
             <PortfolioCard
               title="Corporate Gifts"
-  image="/images/portfolio2.jpg"
-  detailsImages={[
-    "/images/portfolio2-2.jpg",
-    "/images/portfolio2-3.jpg",
-  ]}
-  video="/images/portfolio2.mp4"
-  action="details"
-  description="Подарочные наборы для сотрудников, клиентов и партнёров."
-/>
+              image="/images/portfolio2.jpg"
+              detailsImages={[
+                "/images/portfolio2-2.jpg",
+                "/images/portfolio2-3.jpg",
+              ]}
+              video="/images/portfolio2.mp4"
+              action="details"
+              description="Подарочные наборы для сотрудников, клиентов и партнёров."
+            />
 
+            {/* BRANDING */}
             <PortfolioCard
               title="Branding"
-  image="/images/portfolio3.jpg"
-  detailsImages={[
-    "/images/portfolio3-2.jpg",
-    "/images/portfolio3-3.jpg",
-  ]}
-  video="/images/portfolio3.mp4"
-  action="details"
-  description="UV-печать, лазер, металл, акрил, дерево и другие технологии."
-/>
+              image="/images/portfolio3.jpg"
+              detailsImages={[
+                "/images/portfolio3-2.jpg",
+                "/images/portfolio3-3.jpg",
+              ]}
+              video="/images/portfolio3.mp4"
+              action="details"
+              description="UV-печать, лазер, металл, акрил, дерево и другие технологии."
+            />
           </div>
         </div>
       </section>
 
-      {/* SERVICES */}
+      {/* =========================
+          SERVICES
+      ========================= */}
       <section
         id="services"
         className="bg-[#f7f7f5]"
@@ -272,7 +289,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* =========================
+          FOOTER
+      ========================= */}
       <footer
         id="contacts"
         className="bg-black text-white"
@@ -315,9 +334,10 @@ export default function HomePage() {
         </div>
       </footer>
 
-            {/* FLOATING ACTIONS */}
+      {/* =========================
+          FLOATING ACTIONS
+      ========================= */}
       <div className="fixed bottom-8 right-6 z-[99999] flex flex-col items-center gap-1">
-
         {/* СТРЕЛКА НАВЕРХ */}
         <a
           href="#top"
@@ -325,19 +345,19 @@ export default function HomePage() {
           className="flex h-15 w-16 items-center justify-center pb-1 text-[#25D366] transition-transform duration-200 hover:-translate-y-1"
         >
           <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="32"
-  height="78"
-  viewBox="0 0 24 30"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="2.6"
-  strokeLinecap="round"
-  strokeLinejoin="round"
->
-  <path d="M12 25V5" />
-  <path d="M6 11l6-6 6 6" />
-</svg>
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="78"
+            viewBox="0 0 24 30"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 25V5" />
+            <path d="M6 11l6-6 6 6" />
+          </svg>
         </a>
 
         {/* WHATSAPP */}
@@ -367,7 +387,6 @@ export default function HomePage() {
 
           <span className="whatsapp-pulse"></span>
         </a>
-
       </div>
     </main>
   );
@@ -397,6 +416,7 @@ function Stat({
     </div>
   );
 }
+
 
 /* =========================
    SERVICE CARD
