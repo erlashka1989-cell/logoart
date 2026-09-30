@@ -87,7 +87,7 @@ function AudienceStep() {
 
   return (
     <StepLayout
-      title="Для кого создаём подарок?"
+      title="Для кого создаём подарок подарок?"
       description="Можно выбрать несколько вариантов."
     >
       <div className="grid gap-4 md:grid-cols-2">
