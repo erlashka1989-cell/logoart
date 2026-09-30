@@ -115,77 +115,83 @@ export function PortfolioCard({
           ПОДРОБНОСТИ ПОРТФОЛИО
       =================================== */}
       {openDetails && (
-        <div
-          className="fixed inset-0 z-[100000] overflow-y-auto bg-white/95 backdrop-blur-2xl"
-          onClick={() => setOpenDetails(false)}
-        >
-          <div
-            className="mx-auto min-h-screen max-w-6xl px-5 py-10"
-            onClick={(event) => event.stopPropagation()}
-          >
-            {/* ВЕРХ */}
-            <div className="flex items-start justify-between gap-5">
-              <div>
-                <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">
-                  LOGOART PORTFOLIO
-                </div>
+  <div className="fixed inset-0 z-[100000]">
 
-                <h2 className="mt-2 text-4xl font-bold md:text-5xl">
-                  {title}
-                </h2>
+    {/* ФОН — НАЖАТИЕ ЗАКРЫВАЕТ */}
+    <button
+      type="button"
+      aria-label="Закрыть подробности"
+      onClick={() => setOpenDetails(false)}
+      className="absolute inset-0 h-full w-full bg-white/95 backdrop-blur-2xl"
+    />
 
-                <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-500">
-                  {description}
-                </p>
-              </div>
+    {/* ОКНО */}
+    <div className="relative z-10 h-full overflow-y-auto">
+      <div className="mx-auto max-w-6xl px-5 py-10">
 
-              <button
-                type="button"
-                onClick={() => setOpenDetails(false)}
-                className="shrink-0 text-5xl font-light text-black transition hover:opacity-50"
-                aria-label="Закрыть"
-              >
-                ×
-              </button>
+        {/* ВЕРХ */}
+        <div className="flex items-start justify-between gap-5">
+          <div>
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">
+              LOGOART PORTFOLIO
             </div>
 
-            {/* ФОТО */}
-            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {image && (
-                <img
-                  src={image}
-                  alt={title}
-                  className="h-72 w-full rounded-2xl object-cover"
-                />
-              )}
+            <h2 className="mt-2 text-4xl font-bold md:text-5xl">
+              {title}
+            </h2>
 
-              {detailsImages.map((photo, index) => (
-                <img
-                  key={`${photo}-${index}`}
-                  src={photo}
-                  alt={`${title} ${index + 2}`}
-                  className="h-72 w-full rounded-2xl object-cover"
-                />
-              ))}
-            </div>
-
-            {/* ВИДЕО */}
-            {video && (
-              <div className="mt-10">
-                <div className="mb-4 text-2xl font-bold">
-                  Видео
-                </div>
-
-                <video
-                  src={video}
-                  controls
-                  className="w-full max-h-[650px] rounded-2xl bg-black object-contain"
-                />
-              </div>
-            )}
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-500">
+              {description}
+            </p>
           </div>
+
+          {/* КРЕСТИК */}
+          <button
+            type="button"
+            onClick={() => setOpenDetails(false)}
+            className="shrink-0 text-5xl font-light text-black transition hover:opacity-50"
+            aria-label="Закрыть"
+          >
+            ×
+          </button>
         </div>
-      )}
-    </>
-  );
-}
+
+        {/* ФОТО */}
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {image && (
+            <img
+              src={image}
+              alt={title}
+              className="h-72 w-full rounded-2xl object-cover"
+            />
+          )}
+
+          {detailsImages.map((photo, index) => (
+            <img
+              key={`${photo}-${index}`}
+              src={photo}
+              alt={`${title} ${index + 2}`}
+              className="h-72 w-full rounded-2xl object-cover"
+            />
+          ))}
+        </div>
+
+        {/* ВИДЕО */}
+        {video && (
+          <div className="mt-10 pb-16">
+            <div className="mb-4 text-2xl font-bold">
+              Видео
+            </div>
+
+            <video
+              src={video}
+              controls
+              className="w-full max-h-[650px] rounded-2xl bg-black object-contain"
+            />
+          </div>
+        )}
+
+      </div>
+    </div>
+  </div>
+)}
