@@ -19,8 +19,48 @@ export function PortfolioCard({
   detailsImages = [],
   video,
 }: PortfolioCardProps) {
-  const [openImage, setOpenImage] = useState(false);
-  const [openDetails, setOpenDetails] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const slides = [
+    ...(image
+      ? [{ type: "image" as const, src: image }]
+      : []),
+    ...detailsImages.map((src) => ({
+      type: "image" as const,
+      src,
+    })),
+    ...(video
+      ? [{ type: "video" as const, src: video }]
+      : []),
+  ];
+
+  const openGallery = () => {
+    if (slides.length === 0) return;
+
+    setCurrentIndex(0);
+    setIsOpen(true);
+  };
+
+  const closeGallery = () => {
+    setIsOpen(false);
+  };
+
+  const nextSlide = (event: React.MouseEvent) => {
+    event.stopPropagation();
+
+    setCurrentIndex((prev) =>
+      prev === slides.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const previousSlide = (event: React.MouseEvent) => {
+    event.stopPropagation();
+
+    setCurrentIndex((prev) =>
+      prev === 0 ? slides.length - 1 : prev - 1
+    );
+  };
 
   const whatsappMessage = encodeURIComponent(
     `Здравствуйте! Хочу заказать: ${title}. Подскажите, пожалуйста, стоимость и условия.`
@@ -29,20 +69,23 @@ export function PortfolioCard({
   const whatsappUrl =
     `https://wa.me/77783572157?text=${whatsappMessage}`;
 
+  const currentSlide = slides[currentIndex];
+
   return (
     <>
       <article className="rounded-3xl border border-neutral-200 bg-neutral-50 p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl">
+
         {/* ОСНОВНОЕ ФОТО */}
         <button
           type="button"
-          onClick={() => image && setOpenImage(true)}
+          onClick={openGallery}
           className="block h-64 w-full overflow-hidden rounded-2xl bg-neutral-200"
         >
           {image ? (
             <img
               src={image}
               alt={title}
-              className="h-full w-full cursor-zoom-in object-cover"
+              className="h-full w-full cursor-zoom-in object-cover transition duration-500 hover:scale-105"
             />
           ) : (
             <div className="flex h-full items-center justify-center bg-neutral-900 text-white">
@@ -61,16 +104,8 @@ export function PortfolioCard({
           {description}
         </p>
 
-        {/* КНОПКА */}
-        {action === "details" ? (
-          <button
-            type="button"
-            onClick={() => setOpenDetails(true)}
-            className="mt-5 w-full rounded-xl bg-black px-5 py-3.5 font-semibold text-white transition hover:bg-neutral-800"
-          >
-            Подробнее →
-          </button>
-        ) : (
+        {/* КНОПКА ТОЛЬКО ДЛЯ ПОДАРОЧНЫХ НАБОРОВ */}
+        {action === "order" && (
           <a
             href={whatsappUrl}
             target="_blank"
@@ -82,118 +117,78 @@ export function PortfolioCard({
         )}
       </article>
 
-      {/* ===================================
-          УВЕЛИЧЕНИЕ ОСНОВНОГО ФОТО
-      =================================== */}
-      {openImage && image && (
+      {/* =========================
+          ГАЛЕРЕЯ
+      ========================= */}
+      {isOpen && currentSlide && (
         <div
-          className="fixed inset-0 z-[99999] flex items-center justify-center p-5"
-          onClick={() => setOpenImage(false)}
+          className="fixed inset-0 z-[100000] flex items-center justify-center p-5"
+          onClick={closeGallery}
         >
-          {/* ФОН */}
-          <div className="absolute inset-0 bg-white/90 backdrop-blur-2xl" />
+          {/* РАЗМЫТЫЙ ФОН */}
+          <div className="absolute inset-0 bg-white/95 backdrop-blur-2xl" />
 
-          {/* КРЕСТИК */}
+          {/* ЗАКРЫТЬ */}
           <button
             type="button"
-            onClick={() => setOpenImage(false)}
-            className="absolute right-6 top-4 z-20 text-5xl font-light text-black transition hover:opacity-50"
+            onClick={closeGallery}
             aria-label="Закрыть"
+            className="absolute right-6 top-4 z-30 text-5xl font-light text-black transition hover:opacity-50"
           >
             ×
           </button>
 
-          {/* ФОТО */}
-          <img
-            src={image}
-            alt={title}
-            onClick={(event) => event.stopPropagation()}
-            className="relative z-10 max-h-[78vh] max-w-[82vw] -translate-y-8 rounded-2xl object-contain shadow-2xl"
-          />
-        </div>
-      )}
-
-      {/* ===================================
-          ПОДРОБНОСТИ ПОРТФОЛИО
-      =================================== */}
-      {openDetails && (
-        <div className="fixed inset-0 z-[100000]">
-          {/* ФОН — НАЖАТИЕ ЗАКРЫВАЕТ */}
-          <button
-            type="button"
-            aria-label="Закрыть подробности"
-            onClick={() => setOpenDetails(false)}
-            className="absolute inset-0 h-full w-full bg-white/95 backdrop-blur-2xl"
-          />
+          {/* СТРЕЛКА ВЛЕВО */}
+          {slides.length > 1 && (
+            <button
+              type="button"
+              onClick={previousSlide}
+              aria-label="Предыдущий проект"
+              className="absolute left-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
+            >
+              ‹
+            </button>
+          )}
 
           {/* КОНТЕНТ */}
-          <div className="relative z-10 h-full overflow-y-auto">
-            <div className="mx-auto max-w-6xl px-5 py-10">
-              {/* ВЕРХ */}
-              <div className="flex items-start justify-between gap-5">
-                <div>
-                  <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">
-                    LOGOART PORTFOLIO
-                  </div>
-
-                  <h2 className="mt-2 text-4xl font-bold md:text-5xl">
-                    {title}
-                  </h2>
-
-                  <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-500">
-                    {description}
-                  </p>
-                </div>
-
-                {/* КРЕСТИК */}
-                <button
-                  type="button"
-                  onClick={() => setOpenDetails(false)}
-                  className="shrink-0 text-5xl font-light text-black transition hover:opacity-50"
-                  aria-label="Закрыть"
-                >
-                  ×
-                </button>
-              </div>
-
-              {/* ДОПОЛНИТЕЛЬНЫЕ ФОТО */}
-              {(image || detailsImages.length > 0) && (
-                <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                  {image && (
-                    <img
-                      src={image}
-                      alt={title}
-                      className="h-72 w-full rounded-2xl object-cover"
-                    />
-                  )}
-
-                  {detailsImages.map((photo, index) => (
-                    <img
-                      key={`${photo}-${index}`}
-                      src={photo}
-                      alt={`${title} ${index + 2}`}
-                      className="h-72 w-full rounded-2xl object-cover"
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* ВИДЕО */}
-              {video && (
-                <div className="mt-10 pb-16">
-                  <div className="mb-4 text-2xl font-bold">
-                    Видео
-                  </div>
-
-                  <video
-                    src={video}
-                    controls
-                    className="w-full max-h-[650px] rounded-2xl bg-black object-contain"
-                  />
-                </div>
-              )}
-            </div>
+          <div
+            className="relative z-10 flex max-h-[85vh] max-w-[85vw] items-center justify-center"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {currentSlide.type === "image" ? (
+              <img
+                src={currentSlide.src}
+                alt={title}
+                className="max-h-[80vh] max-w-[82vw] rounded-2xl object-contain shadow-2xl"
+              />
+            ) : (
+              <video
+                src={currentSlide.src}
+                controls
+                autoPlay
+                className="max-h-[80vh] max-w-[82vw] rounded-2xl bg-black object-contain shadow-2xl"
+              />
+            )}
           </div>
+
+          {/* СТРЕЛКА ВПРАВО */}
+          {slides.length > 1 && (
+            <button
+              type="button"
+              onClick={nextSlide}
+              aria-label="Следующий проект"
+              className="absolute right-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
+            >
+              ›
+            </button>
+          )}
+
+          {/* СЧЁТЧИК */}
+          {slides.length > 1 && (
+            <div className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black/10 px-4 py-2 text-sm font-medium text-black backdrop-blur">
+              {currentIndex + 1} / {slides.length}
+            </div>
+          )}
         </div>
       )}
     </>
