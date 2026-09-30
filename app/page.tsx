@@ -207,6 +207,13 @@ export default function HomePage() {
             <PortfolioCard
               title="Статуэтки"
               image="/images/portfolio1.jpg"
+              detailsImages={[
+              "/images/portfolio1-2.jpg",
+              "/images/portfolio1-3.jpg",
+              "/images/portfolio1-4.jpg",
+              ]}
+              video="/images/portfolio1.mp4"
+              action="details"
               description="Индивидуальные награды и премиальные корпоративные изделия."
             />
 

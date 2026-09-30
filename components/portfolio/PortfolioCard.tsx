@@ -6,29 +6,37 @@ type PortfolioCardProps = {
   title: string;
   description: string;
   image?: string;
+  action?: "order" | "details";
+  detailsImages?: string[];
+  video?: string;
 };
 
 export function PortfolioCard({
   title,
   description,
   image,
+  action = "order",
+  detailsImages = [],
+  video,
 }: PortfolioCardProps) {
-  const [open, setOpen] = useState(false);
+  const [openImage, setOpenImage] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
 
   const whatsappMessage = encodeURIComponent(
     `Здравствуйте! Хочу заказать: ${title}. Подскажите, пожалуйста, стоимость и условия.`
   );
 
-  const whatsappUrl = `https://wa.me/77783572157?text=${whatsappMessage}`;
+  const whatsappUrl =
+    `https://wa.me/77783572157?text=${whatsappMessage}`;
 
   return (
     <>
       <article className="rounded-3xl border border-neutral-200 bg-neutral-50 p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl">
 
-        {/* ФОТО */}
+        {/* ОСНОВНОЕ ФОТО */}
         <button
           type="button"
-          onClick={() => image && setOpen(true)}
+          onClick={() => image && setOpenImage(true)}
           className="block h-64 w-full overflow-hidden rounded-2xl bg-neutral-200"
         >
           {image ? (
@@ -55,45 +63,127 @@ export function PortfolioCard({
         </p>
 
         {/* КНОПКА */}
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-5 block w-full rounded-xl bg-[#25D366] px-5 py-3.5 text-center font-semibold text-white transition hover:bg-[#1ebe5d]"
-        >
-          Заказать в WhatsApp →
-        </a>
+        {action === "order" ? (
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-5 block w-full rounded-xl bg-[#25D366] px-5 py-3.5 text-center font-semibold text-white transition hover:bg-[#1ebe5d]"
+          >
+            Заказать в WhatsApp →
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setOpenDetails(true)}
+            className="mt-5 w-full rounded-xl bg-black px-5 py-3.5 font-semibold text-white transition hover:bg-neutral-800"
+          >
+            Подробнее →
+          </button>
+        )}
       </article>
 
-      {/* УВЕЛИЧЕННОЕ ФОТО */}
-      {open && image && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center p-5">
-          {/* ФОН */}
+      {/* ===================================
+          УВЕЛИЧЕННОЕ ОСНОВНОЕ ФОТО
+      =================================== */}
+      {openImage && image && (
+        <div
+          className="fixed inset-0 z-[99999] flex items-center justify-center p-5"
+          onClick={() => setOpenImage(false)}
+        >
+          <div className="absolute inset-0 bg-white/90 backdrop-blur-2xl" />
+
           <button
             type="button"
-            aria-label="Закрыть изображение"
-            onClick={() => setOpen(false)}
-            className="absolute inset-0 h-full w-full bg-white/90 backdrop-blur-2xl"
-          />
-
-          {/* ФОТО */}
-          <div className="relative z-10">
-            <img
-              src={image}
-              alt={title}
-              className="max-h-[78vh] max-w-[82vw] -translate-y-8 rounded-2xl object-contain shadow-2xl"
-            />
-          </div>
-
-          {/* КРЕСТИК */}
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
-            aria-label="Закрыть"
+            onClick={() => setOpenImage(false)}
             className="absolute right-6 top-4 z-20 text-5xl font-light text-black transition hover:opacity-50"
+            aria-label="Закрыть"
           >
             ×
           </button>
+
+          <img
+            src={image}
+            alt={title}
+            onClick={(event) => event.stopPropagation()}
+            className="relative z-10 max-h-[78vh] max-w-[82vw] -translate-y-8 rounded-2xl object-contain shadow-2xl"
+          />
+        </div>
+      )}
+
+      {/* ===================================
+          ПОДРОБНОСТИ ПОРТФОЛИО
+      =================================== */}
+      {openDetails && (
+        <div
+          className="fixed inset-0 z-[100000] overflow-y-auto bg-white/95 backdrop-blur-2xl"
+          onClick={() => setOpenDetails(false)}
+        >
+          <div
+            className="mx-auto min-h-screen max-w-6xl px-5 py-10"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {/* ВЕРХ */}
+            <div className="flex items-start justify-between gap-5">
+              <div>
+                <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">
+                  LOGOART PORTFOLIO
+                </div>
+
+                <h2 className="mt-2 text-4xl font-bold md:text-5xl">
+                  {title}
+                </h2>
+
+                <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-500">
+                  {description}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setOpenDetails(false)}
+                className="shrink-0 text-5xl font-light text-black transition hover:opacity-50"
+                aria-label="Закрыть"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* ФОТО */}
+            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {image && (
+                <img
+                  src={image}
+                  alt={title}
+                  className="h-72 w-full rounded-2xl object-cover"
+                />
+              )}
+
+              {detailsImages.map((photo, index) => (
+                <img
+                  key={`${photo}-${index}`}
+                  src={photo}
+                  alt={`${title} ${index + 2}`}
+                  className="h-72 w-full rounded-2xl object-cover"
+                />
+              ))}
+            </div>
+
+            {/* ВИДЕО */}
+            {video && (
+              <div className="mt-10">
+                <div className="mb-4 text-2xl font-bold">
+                  Видео
+                </div>
+
+                <video
+                  src={video}
+                  controls
+                  className="w-full max-h-[650px] rounded-2xl bg-black object-contain"
+                />
+              </div>
+            )}
+          </div>
         </div>
       )}
     </>
