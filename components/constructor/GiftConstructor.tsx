@@ -40,7 +40,7 @@ function Progress() {
   );
 
   return (
-    <div className="mb-10 -translate-y-2">
+    <div className="mb-10 -translate-y-10">
       <div className="mb-3 flex items-center justify-between text-sm">
         <span className="font-medium">
           Шаг {currentStep} из 6
