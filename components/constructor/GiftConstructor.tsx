@@ -40,7 +40,7 @@ function Progress() {
   );
 
   return (
-    <div className="mb-10 -translate-y-4">
+    <div className="mb-10 -translate-y-2">
       <div className="mb-3 flex items-center justify-between text-sm">
         <span className="font-medium">
           Шаг {currentStep} из 6
@@ -87,7 +87,7 @@ function AudienceStep() {
 
   return (
     <StepLayout
-      title="Для кого создаём подарок подарок?"
+      title="Для кого создаём подарок?"
       description="Можно выбрать несколько вариантов."
     >
       <div className="grid gap-4 md:grid-cols-2">
