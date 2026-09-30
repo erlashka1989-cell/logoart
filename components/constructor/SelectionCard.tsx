@@ -24,7 +24,7 @@ export function SelectionCard({
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className={[
-        "group relative w-full rounded-2xl border p-5 text-left transition-all",
+        "group relative w-full rounded-3xl border p-5 text-left transition-all",
         selected
           ? "border-black bg-black text-white shadow-xl"
           : "border-neutral-200 bg-white text-neutral-900 hover:border-neutral-400 hover:shadow-lg"
