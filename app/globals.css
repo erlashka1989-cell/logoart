@@ -1,0 +1,336 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f7f5;
+  --foreground: #111111;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh !important;
+  margin: 0 !important;
+
+  background: url("/images/background.jpg") center center / cover no-repeat fixed !important;
+
+  color: white;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #111111;
+  color: white;
+}
+
+/* =========================
+   FLOATING WHATSAPP
+========================= */
+
+.whatsapp-float {
+  width: 62px;
+  height: 62px;
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9999px;
+  background: #25d366;
+  color: white;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+
+  animation: whatsappMove 5s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes whatsappMove {
+  0%,
+  88%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  90% {
+    transform: translateY(-4px) rotate(-6deg);
+  }
+
+  92% {
+    transform: translateY(0) rotate(6deg);
+  }
+
+  94% {
+    transform: translateY(-3px) rotate(-4deg);
+  }
+
+  96% {
+    transform: translateY(0) rotate(2deg);
+  }
+}
+
+.whatsapp-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid rgba(37, 211, 102, 0.45);
+  animation: whatsappPulse 2.5s ease-out infinite;
+}
+
+@keyframes whatsappPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  70% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .whatsapp-float {
+    right: 16px;
+    bottom: 16px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .whatsapp-float svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* =========================
+   SCROLL TOP BUTTON
+========================= */
+
+.scroll-top-button {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9999px;
+
+  background: #111111;
+  color: white;
+
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+
+  text-decoration: none;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.scroll-top-button:hover {
+  background: #333333;
+  transform: translateY(-3px);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 640px) {
+  .scroll-top-button {
+    width: 42px;
+    height: 42px;
+    font-size: 22px;
+  }
+}
+/* =========================
+   IMAGE LIGHTBOX
+========================= */
+
+/* =========================
+   IMAGE LIGHTBOX
+========================= */
+
+/* =========================
+   IMAGE LIGHTBOX
+========================= */
+
+.image-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.image-lightbox:target {
+  display: flex;
+}
+
+/* ФОН НА ВЕСЬ ЭКРАН */
+.image-lightbox-bg {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(245, 245, 245, 0.96);
+
+  backdrop-filter: blur(24px) saturate(70%);
+  -webkit-backdrop-filter: blur(24px) saturate(70%);
+}
+
+/* КАРТИНКА */
+.image-lightbox-content {
+  position: relative;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 82vw;
+  max-height: 78vh;
+
+  transform: translateY(-40px);
+}
+
+/* КНОПКА ЗАКРЫТИЯ */
+.image-lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  z-index: 20;
+
+  color: #111111;
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1;
+
+  text-decoration: none;
+}
+
+.image-lightbox-close:hover {
+  opacity: 0.6;
+}
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
+.image-preview {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.image-preview:popover-open {
+  display: flex;
+}
+
+/* Размытый фон */
+.image-preview-bg {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  padding: 0;
+
+  background: rgba(245, 245, 245, 0.96);
+
+  backdrop-filter: blur(22px) saturate(70%);
+  -webkit-backdrop-filter: blur(22px) saturate(70%);
+
+  cursor: zoom-out;
+}
+
+/* Фото */
+.image-preview-photo {
+  position: relative;
+  z-index: 2;
+
+  max-width: 82vw;
+  max-height: 78vh;
+
+  object-fit: contain;
+
+  border-radius: 16px;
+
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+
+  transform: translateY(-40px);
+}
+
+/* Крестик */
+.image-preview-close {
+  position: absolute;
+  right: 28px;
+  top: 16px;
+
+  z-index: 3;
+
+  border: 0;
+  background: transparent;
+
+  color: #111;
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.image-preview-close:hover {
+  opacity: 0.5;
+}
