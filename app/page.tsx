@@ -15,7 +15,7 @@ export default function HomePage() {
   className="flex items-center"
 >
   <img
-    src="/images/logo.png"
+    src="/images/Logo.png"
     alt="LogoART"
     className="h-14 w-auto object-contain"
   />
