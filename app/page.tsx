@@ -219,15 +219,27 @@ export default function HomePage() {
 
             <PortfolioCard
               title="Corporate Gifts"
-              image="/images/portfolio2.jpg"
-              description="Подарочные наборы для сотрудников, клиентов и партнёров."
-            />
+  image="/images/portfolio2.jpg"
+  detailsImages={[
+    "/images/portfolio2-2.jpg",
+    "/images/portfolio2-3.jpg",
+  ]}
+  video="/images/portfolio2.mp4"
+  action="details"
+  description="Подарочные наборы для сотрудников, клиентов и партнёров."
+/>
 
             <PortfolioCard
               title="Branding"
-              image="/images/portfolio3.jpg"
-              description="UV-печать, лазер, металл, акрил, дерево и другие технологии."
-            />
+  image="/images/portfolio3.jpg"
+  detailsImages={[
+    "/images/portfolio3-2.jpg",
+    "/images/portfolio3-3.jpg",
+  ]}
+  video="/images/portfolio3.mp4"
+  action="details"
+  description="UV-печать, лазер, металл, акрил, дерево и другие технологии."
+/>
           </div>
         </div>
       </section>
