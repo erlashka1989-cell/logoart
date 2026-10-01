@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 type PortfolioCardProps = {
   title: string;
@@ -21,70 +22,81 @@ export function PortfolioCard({
 }: PortfolioCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  useEffect(() => {
-  if (!isOpen) {
-    return;
-  }
-
-  const scrollY = window.scrollY;
-  const body = document.body;
-
-  body.style.position = "fixed";
-  body.style.top = `-${scrollY}px`;
-  body.style.left = "0";
-  body.style.right = "0";
-  body.style.overflow = "hidden";
-
-  return () => {
-    body.style.position = "";
-    body.style.top = "";
-    body.style.left = "";
-    body.style.right = "";
-    body.style.overflow = "";
-
-    window.scrollTo(0, scrollY);
-  };
-}, [isOpen]);
 
   const slides = [
     ...(image
       ? [{ type: "image" as const, src: image }]
       : []),
+
     ...detailsImages.map((src) => ({
       type: "image" as const,
       src,
     })),
+
     ...(video
       ? [{ type: "video" as const, src: video }]
       : []),
   ];
 
-  const openGallery = () => {
-    if (slides.length === 0) return;
+  /*
+   * Блокируем прокрутку страницы,
+   * пока открыта галерея.
+   */
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const scrollY = window.scrollY;
+    const body = document.body;
+
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+
+    return () => {
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.width = "";
+      body.style.overflow = "";
+
+      window.scrollTo(0, scrollY);
+    };
+  }, [isOpen]);
+
+  function openGallery() {
+    if (slides.length === 0) {
+      return;
+    }
 
     setCurrentIndex(0);
     setIsOpen(true);
-  };
+  }
 
-  const closeGallery = () => {
+  function closeGallery() {
     setIsOpen(false);
-  };
+  }
 
-  const nextSlide = (event: React.MouseEvent) => {
+  function nextSlide(event: React.MouseEvent) {
     event.stopPropagation();
 
-    setCurrentIndex((prev) =>
-      prev === slides.length - 1 ? 0 : prev + 1
+    setCurrentIndex((current) =>
+      current === slides.length - 1 ? 0 : current + 1
     );
-  };
+  }
 
-  const previousSlide = (event: React.MouseEvent) => {
+  function previousSlide(event: React.MouseEvent) {
     event.stopPropagation();
 
-    setCurrentIndex((prev) =>
-      prev === 0 ? slides.length - 1 : prev - 1
+    setCurrentIndex((current) =>
+      current === 0 ? slides.length - 1 : current - 1
     );
-  };
+  }
 
   const whatsappMessage = encodeURIComponent(
     `Здравствуйте! Хочу заказать: ${title}. Подскажите, пожалуйста, стоимость и условия.`
@@ -95,11 +107,82 @@ export function PortfolioCard({
 
   const currentSlide = slides[currentIndex];
 
+  const gallery = isOpen && currentSlide ? (
+    <div
+      className="fixed inset-0 z-[999999] flex items-center justify-center"
+      onClick={closeGallery}
+    >
+      {/* РАЗМЫТЫЙ ФОН */}
+      <div className="absolute inset-0 bg-white/95 backdrop-blur-2xl" />
+
+      {/* КРЕСТИК */}
+      <button
+        type="button"
+        onClick={closeGallery}
+        aria-label="Закрыть"
+        className="absolute right-6 top-3 z-30 text-5xl font-light text-black transition hover:opacity-50"
+      >
+        ×
+      </button>
+
+      {/* СТРЕЛКА ВЛЕВО */}
+      {slides.length > 1 && (
+        <button
+          type="button"
+          onClick={previousSlide}
+          aria-label="Предыдущий слайд"
+          className="absolute left-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
+        >
+          ‹
+        </button>
+      )}
+
+      {/* ОСНОВНОЙ КОНТЕНТ */}
+      <div
+        className="relative z-20 flex max-h-[82vh] max-w-[84vw] -translate-y-10 items-center justify-center"
+        onClick={(event) => event.stopPropagation()}
+      >
+        {currentSlide.type === "image" ? (
+          <img
+            src={currentSlide.src}
+            alt={title}
+            className="max-h-[76vh] max-w-[82vw] rounded-2xl object-contain shadow-2xl"
+          />
+        ) : (
+          <video
+            src={currentSlide.src}
+            controls
+            autoPlay
+            className="max-h-[76vh] max-w-[82vw] rounded-2xl bg-black object-contain shadow-2xl"
+          />
+        )}
+      </div>
+
+      {/* СТРЕЛКА ВПРАВО */}
+      {slides.length > 1 && (
+        <button
+          type="button"
+          onClick={nextSlide}
+          aria-label="Следующий слайд"
+          className="absolute right-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
+        >
+          ›
+        </button>
+      )}
+
+      {/* НОМЕР СЛАЙДА */}
+      {slides.length > 1 && (
+        <div className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black/10 px-4 py-2 text-sm font-medium text-black backdrop-blur">
+          {currentIndex + 1} / {slides.length}
+        </div>
+      )}
+    </div>
+  ) : null;
+
   return (
     <>
       <article className="rounded-3xl border border-neutral-200 bg-neutral-50 p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl">
-
-        {/* ОСНОВНОЕ ФОТО */}
+        {/* ФОТО */}
         <button
           type="button"
           onClick={openGallery}
@@ -128,7 +211,7 @@ export function PortfolioCard({
           {description}
         </p>
 
-        {/* КНОПКА ТОЛЬКО ДЛЯ ПОДАРОЧНЫХ НАБОРОВ */}
+        {/* WHATSAPP ТОЛЬКО ДЛЯ ПОДАРОЧНЫХ НАБОРОВ */}
         {action === "order" && (
           <a
             href={whatsappUrl}
@@ -141,80 +224,13 @@ export function PortfolioCard({
         )}
       </article>
 
-      {/* =========================
-          ГАЛЕРЕЯ
-      ========================= */}
-      {isOpen && currentSlide && (
-        <div
-          className="fixed inset-0 z-[999999] flex items-center justify-center p-5"
-          onClick={closeGallery}
-        >
-          {/* РАЗМЫТЫЙ ФОН */}
-          <div className="absolute inset-0 bg-white/95 backdrop-blur-2xl" />
-
-          {/* ЗАКРЫТЬ */}
-          <button
-            type="button"
-            onClick={closeGallery}
-            aria-label="Закрыть"
-            className="absolute right-6 top-4 z-30 text-5xl font-light text-black transition hover:opacity-50"
-          >
-            ×
-          </button>
-
-          {/* СТРЕЛКА ВЛЕВО */}
-          {slides.length > 1 && (
-            <button
-              type="button"
-              onClick={previousSlide}
-              aria-label="Предыдущий проект"
-              className="absolute left-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
-            >
-              ‹
-            </button>
-          )}
-
-          {/* КОНТЕНТ */}
-          <div
-            className="relative z-10 flex max-h-[85vh] max-w-[85vw] items-center justify-center"
-            onClick={(event) => event.stopPropagation()}
-          >
-            {currentSlide.type === "image" ? (
-              <img
-                src={currentSlide.src}
-                alt={title}
-                className="max-h-[76vh] max-w-[82vw] -translate-y-10 rounded-2xl object-contain shadow-2xl"
-              />
-            ) : (
-              <video
-                src={currentSlide.src}
-                controls
-                autoPlay
-                className="max-h-[80vh] max-w-[82vw] rounded-2xl bg-black object-contain shadow-2xl"
-              />
-            )}
-          </div>
-
-          {/* СТРЕЛКА ВПРАВО */}
-          {slides.length > 1 && (
-            <button
-              type="button"
-              onClick={nextSlide}
-              aria-label="Следующий проект"
-              className="absolute right-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
-            >
-              ›
-            </button>
-          )}
-
-          {/* СЧЁТЧИК */}
-          {slides.length > 1 && (
-            <div className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black/10 px-4 py-2 text-sm font-medium text-black backdrop-blur">
-              {currentIndex + 1} / {slides.length}
-            </div>
-          )}
-        </div>
-      )}
+      {/* ВАЖНО:
+          выводим галерею ПРЯМО В BODY,
+          поэтому translate-y-3 у родительского
+          блока больше никак не влияет.
+      */}
+      {typeof document !== "undefined" &&
+        createPortal(gallery, document.body)}
     </>
   );
 }
