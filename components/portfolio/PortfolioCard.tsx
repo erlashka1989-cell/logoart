@@ -46,6 +46,10 @@ export function PortfolioCard({
     if (!isOpen) {
       return;
     }
+    
+    useEffect(() => {
+  // управление клавиатурой
+}, [isOpen, slides.length]);
 
     const scrollY = window.scrollY;
     const body = document.body;
