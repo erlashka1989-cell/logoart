@@ -1,6 +1,6 @@
+
 import { GiftConstructor } from "@/components/constructor/GiftConstructor";
 import { PortfolioCard } from "@/components/portfolio/PortfolioCard";
-import { MobileMenu } from "@/components/MobileMenu";
 
 export default function HomePage() {
   return (
@@ -11,7 +11,7 @@ export default function HomePage() {
       {/* =========================
           HEADER
       ========================= */}
-      <header className="fixed left-0 right-0 top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-5 sm:py-5">
 
           {/* LOGO */}
@@ -73,7 +73,59 @@ export default function HomePage() {
           </a>
 
           {/* MOBILE MENU */}
-          <MobileMenu />
+          <details className="relative lg:hidden">
+            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-neutral-200 bg-white text-xl">
+              ☰
+            </summary>
+
+            <div className="absolute right-0 top-14 z-[100] w-[calc(100vw-32px)] max-w-72 rounded-2xl border border-neutral-200 bg-white p-3 shadow-2xl">
+              <nav className="flex flex-col">
+
+                <a
+                  href="#constructor"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Подобрать
+                </a>
+
+                <a
+                  href="#giftsets"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Подарочные наборы
+                </a>
+
+                <a
+                  href="#portfolio"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Портфолио
+                </a>
+
+                <a
+                  href="#services"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Услуги
+                </a>
+
+                <a
+                  href="#contacts"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Контакты
+                </a>
+
+                <a
+                  href="#constructor"
+                  className="mt-2 rounded-xl bg-black px-4 py-3 text-center font-semibold text-white"
+                >
+                  Получить подбор
+                </a>
+
+              </nav>
+            </div>
+          </details>
         </div>
       </header>
 
@@ -90,7 +142,7 @@ export default function HomePage() {
         <div className="mx-auto flex min-h-[560px] max-w-7xl items-center px-5 py-16 sm:py-20 md:-translate-y-10 md:px-5 lg:-translate-y-15">
           <div className="max-w-4xl text-white">
 
-            <div className="mb-5 inline-flex max-w-full rounded-full border border-white/30 bg-black/20 px-4 py-2 text-center text-xs text-white/90 backdrop-blur sm:mb-6 sm:text-sm">
+            <div className="mb-7 inline-flex max-w-full rounded-full border border-white/30 bg-black/20 px-4 py-2 text-center text-xs text-white/90 backdrop-blur sm:mb-6 sm:text-sm">
               Премиальные сувениры · Дизайн · Производство · Брендирование
             </div>
 
@@ -551,3 +603,4 @@ function ServiceCard({
     </article>
   );
 }
+```
