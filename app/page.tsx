@@ -290,7 +290,6 @@ export default function HomePage() {
                 "/images/portfolio3-2.jpg",
                 "/images/portfolio3-3.jpg",
               ]}
-              video="/images/portfolio3.mp4"
               action="details"
               description="UV-печать, лазер, металл, акрил, дерево и другие технологии."
             />
