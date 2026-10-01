@@ -145,7 +145,7 @@ function BudgetStep() {
   }
 
   return (
-    <StepLayout 
+    <StepLayout
       title="Какой объём и бюджет?"
       description="Бюджет на человека и общий бюджет пересчитываются автоматически."
     >
@@ -617,12 +617,19 @@ function ResultStep() {
                   </ul>
                 </div>
 
-                <button
-                  type="button"
-                  className="mt-6 w-full rounded-xl bg-black px-5 py-3 font-semibold text-white transition hover:bg-neutral-800"
+                {/* ЗАПРОС КП В WHATSAPP */}
+                <a
+                  href={`https://wa.me/77783572157?text=${encodeURIComponent(
+                    `Здравствуйте! Хочу запросить КП по варианту "${recommendation.title}". Ориентир за человека: ${formatPrice(
+                      recommendation.pricePerPerson
+                    )} ₸. Подскажите, пожалуйста, условия и стоимость.`
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-6 block w-full rounded-xl bg-black px-5 py-3 text-center font-semibold text-white transition hover:bg-neutral-800"
                 >
-                  Запросить расчёт
-                </button>
+                  Запросить КП →
+                </a>
               </div>
             </motion.article>
           )
