@@ -182,6 +182,42 @@ export default function HomePage() {
               image="/images/gift3.jpg"
               description="за 1 шт. в корпоративном тираже · базовое брендирование включено."
             />
+
+            <PortfolioCard
+              title="Подарочный набор №4"
+              image="/images/gift4.jpg"
+              description="за 1 шт. в корпоративном тираже · базовое брендирование включено."
+            />
+
+            <PortfolioCard
+              title="Подарочный набор №5"
+              image="/images/gift5.jpg"
+              description="за 1 шт. в корпоративном тираже · базовое брендирование включено."
+            />
+
+            <PortfolioCard
+              title="Подарочный набор №6"
+              image="/images/gift6.jpg"
+              description="за 1 шт. в корпоративном тираже · базовое брендирование включено."
+            />
+
+            <PortfolioCard
+              title="Подарочный набор №7"
+              image="/images/gift7.jpg"
+              description="за 1 шт. в корпоративном тираже · базовое брендирование включено."
+            />
+
+            <PortfolioCard
+              title="Подарочный набор №8"
+              image="/images/gift8.jpg"
+              description="за 1 шт. в корпоративном тираже · базовое брендирование включено."
+            />
+
+            <PortfolioCard
+              title="Подарочный набор №9"
+              image="/images/gift9.jpg"
+              description="за 1 шт. в корпоративном тираже · базовое брендирование включено."
+            />
           </div>
         </div>
       </section>
