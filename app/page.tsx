@@ -83,9 +83,8 @@ export default function HomePage() {
       <section
         className="relative min-h-[560px] overflow-hidden bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage:
-            'linear-gradient(rgba(0,0,0,0.58), rgba(0,0,0,0.68)), url("/images/background.jpg")',
-        }}
+  backgroundImage: 'url("/images/background.jpg")',
+}}
       >
         <div className="mx-auto flex min-h-[560px] max-w-7xl items-center px-5 py-16 sm:py-20 md:-translate-y-10 md:px-5 lg:-translate-y-15">
           <div className="max-w-4xl text-white">
