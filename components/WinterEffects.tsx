@@ -13,7 +13,7 @@ const flakes = Array.from({ length: 35 }, (_, index) => ({
 
 export function WinterEffects() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -23,26 +23,31 @@ export function WinterEffects() {
     audio.volume = 0.25;
     audio.loop = true;
 
-    const startMusic = async () => {
+    const tryPlay = async () => {
       try {
         await audio.play();
         setIsPlaying(true);
 
-        document.removeEventListener("click", startMusic);
-        document.removeEventListener("touchstart", startMusic);
+        window.removeEventListener("pointerdown", tryPlay);
+        window.removeEventListener("keydown", tryPlay);
+        window.removeEventListener("touchstart", tryPlay);
       } catch {
-        // Автозапуск заблокирован браузером.
+        setIsPlaying(false);
       }
     };
 
-    startMusic();
+    // Пробуем сразу
+    tryPlay();
 
-    document.addEventListener("click", startMusic);
-    document.addEventListener("touchstart", startMusic);
+    // Если браузер заблокировал — запускаем после первого взаимодействия
+    window.addEventListener("pointerdown", tryPlay, { once: false });
+    window.addEventListener("keydown", tryPlay, { once: false });
+    window.addEventListener("touchstart", tryPlay, { once: false });
 
     return () => {
-      document.removeEventListener("click", startMusic);
-      document.removeEventListener("touchstart", startMusic);
+      window.removeEventListener("pointerdown", tryPlay);
+      window.removeEventListener("keydown", tryPlay);
+      window.removeEventListener("touchstart", tryPlay);
     };
   }, []);
 
@@ -89,7 +94,6 @@ export function WinterEffects() {
       <audio
         ref={audioRef}
         src="/music/background.mp3"
-        autoPlay
         loop
         preload="auto"
       />
