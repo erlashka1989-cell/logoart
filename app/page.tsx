@@ -5,27 +5,28 @@ export default function HomePage() {
   return (
     <main
       id="top"
-      className="min-h-screen bg-[#f7f7f5] text-neutral-950"
+      className="min-h-screen overflow-x-hidden bg-[#f7f7f5] text-neutral-950"
     >
       {/* =========================
           HEADER
       ========================= */}
       <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-5 sm:py-5">
+
           {/* LOGO */}
           <a
             href="#top"
-            className="flex items-center"
+            className="flex shrink-0 items-center"
           >
             <img
               src="/images/Logo.png"
               alt="LogoART"
-              className="h-14 w-auto object-contain"
+              className="h-10 w-auto object-contain sm:h-14"
             />
           </a>
 
-          {/* NAVIGATION */}
-          <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
+          {/* DESKTOP NAVIGATION */}
+          <nav className="hidden items-center gap-6 text-sm font-medium lg:flex xl:gap-8">
             <a
               href="#constructor"
               className="transition hover:text-neutral-500"
@@ -62,13 +63,68 @@ export default function HomePage() {
             </a>
           </nav>
 
-          {/* HEADER BUTTON */}
+          {/* DESKTOP BUTTON */}
           <a
             href="#constructor"
-            className="rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
+            className="hidden rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 lg:block"
           >
             Получить подбор
           </a>
+
+          {/* MOBILE MENU */}
+          <details className="relative lg:hidden">
+            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-neutral-200 bg-white text-xl">
+              ☰
+            </summary>
+
+            <div className="absolute right-0 top-14 z-[100] w-[calc(100vw-32px)] max-w-72 rounded-2xl border border-neutral-200 bg-white p-3 shadow-2xl">
+              <nav className="flex flex-col">
+
+                <a
+                  href="#constructor"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Подобрать
+                </a>
+
+                <a
+                  href="#giftsets"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Подарочные наборы
+                </a>
+
+                <a
+                  href="#portfolio"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Портфолио
+                </a>
+
+                <a
+                  href="#services"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Услуги
+                </a>
+
+                <a
+                  href="#contacts"
+                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
+                >
+                  Контакты
+                </a>
+
+                <a
+                  href="#constructor"
+                  className="mt-2 rounded-xl bg-black px-4 py-3 text-center font-semibold text-white"
+                >
+                  Получить подбор
+                </a>
+
+              </nav>
+            </div>
+          </details>
         </div>
       </header>
 
@@ -82,41 +138,42 @@ export default function HomePage() {
             'linear-gradient(rgba(0,0,0,0.58), rgba(0,0,0,0.68)), url("/images/background.jpg")',
         }}
       >
-        <div className="mx-auto flex min-h-[560px] max-w-7xl items-center px-5 py-20 -translate-y-15">
+        <div className="mx-auto flex min-h-[560px] max-w-7xl items-center px-5 py-16 sm:py-20 md:-translate-y-10 md:px-5 lg:-translate-y-15">
           <div className="max-w-4xl text-white">
-            <div className="mb-6 inline-flex rounded-full border border-white/30 bg-black/20 px-4 py-2 text-sm text-white/90 backdrop-blur">
+
+            <div className="mb-5 inline-flex max-w-full rounded-full border border-white/30 bg-black/20 px-4 py-2 text-center text-xs text-white/90 backdrop-blur sm:mb-6 sm:text-sm">
               Премиальные сувениры · Дизайн · Производство · Брендирование
             </div>
 
-            <h1 className="text-5xl font-black tracking-tight md:text-7xl -translate-y-3">
+            <h1 className="text-4xl font-black leading-tight tracking-tight sm:text-5xl md:text-7xl">
               Корпоративные подарки,
-              <br />
+              <br className="hidden sm:block" />
               которые запоминаются.
             </h1>
 
-            <p className="mt-3 max-w-2xl text-lg leading-8 text-white/75 md:text-xl">
+            <p className="mt-4 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8 md:text-xl">
               Разрабатываем и производим премиальные
               сувениры, награды, корпоративные подарки
               и брендированные решения под задачу бизнеса.
             </p>
 
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#constructor"
-                className="rounded-xl bg-white px-7 py-4 text-center font-semibold text-black transition hover:bg-neutral-200"
+                className="rounded-xl bg-white px-6 py-3.5 text-center font-semibold text-black transition hover:bg-neutral-200 sm:px-7 sm:py-4"
               >
                 Подобрать подарок →
               </a>
 
               <a
                 href="#portfolio"
-                className="rounded-xl border border-white/40 bg-black/20 px-7 py-4 text-center font-semibold text-white backdrop-blur transition hover:bg-white/10"
+                className="rounded-xl border border-white/40 bg-black/20 px-6 py-3.5 text-center font-semibold text-white backdrop-blur transition hover:bg-white/10 sm:px-7 sm:py-4"
               >
                 Смотреть проекты
               </a>
             </div>
 
-            <div className="mt-6 grid max-w-2xl grid-cols-2 gap-6 border-t border-white/20 pt-7 md:grid-cols-4">
+            <div className="mt-7 grid grid-cols-2 gap-5 border-t border-white/20 pt-6 sm:gap-6 sm:pt-7 md:max-w-2xl md:grid-cols-4">
               <Stat
                 value="150 000 ₸"
                 label="минимальный проект"
@@ -137,6 +194,7 @@ export default function HomePage() {
                 label="ответственный подрядчик"
               />
             </div>
+
           </div>
         </div>
       </section>
@@ -146,25 +204,26 @@ export default function HomePage() {
       ========================= */}
       <section
         id="giftsets"
-        className="border-t border-neutral-200 bg-white"
+        className="scroll-mt-20 border-t border-neutral-200 bg-white"
       >
-        <div className="mx-auto max-w-7xl px-5 py-24 translate-y-3">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
+
           <div className="max-w-3xl">
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400 sm:text-sm">
               LOGOART ПОДАРОЧНЫЕ НАБОРЫ
             </div>
 
-            <h2 className="mt-5 text-3xl font-bold md:text-5xl">
+            <h2 className="mt-4 text-3xl font-bold sm:text-4xl md:text-5xl">
               ГОТОВЫЕ НАБОРЫ
             </h2>
 
-            <p className="mt-3 text-lg leading-8 text-neutral-500">
+            <p className="mt-3 text-base leading-7 text-neutral-500 sm:text-lg sm:leading-8">
               Выберите готовый вариант — мы адаптируем его под ваш бренд,
               цвет и тираж.
             </p>
           </div>
 
-          <div className="mt-5 grid gap-5 md:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
             <PortfolioCard
               title="Подарочный набор №1"
               image="/images/gift1.jpg"
@@ -219,6 +278,7 @@ export default function HomePage() {
               description="за 1 шт. в корпоративном тираже · базовое брендирование включено."
             />
           </div>
+
         </div>
       </section>
 
@@ -232,26 +292,28 @@ export default function HomePage() {
       ========================= */}
       <section
         id="portfolio"
-        className="border-t border-neutral-200 bg-white"
+        className="scroll-mt-20 border-t border-neutral-200 bg-white"
       >
-        <div className="mx-auto max-w-7xl px-5 py-24 translate-y-3">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
+
           <div className="max-w-3xl">
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-400 sm:text-sm">
               LOGOART PORTFOLIO
             </div>
 
-            <h2 className="mt-3 text-3xl font-bold md:text-5xl">
+            <h2 className="mt-3 text-3xl font-bold sm:text-4xl md:text-5xl">
               Производим не просто сувениры.
             </h2>
 
-            <p className="mt-3 text-lg leading-8 text-neutral-500">
+            <p className="mt-3 text-base leading-7 text-neutral-500 sm:text-lg sm:leading-8">
               Статуэтки, награды, подарочные наборы,
               корпоративный мерч, упаковка и
               индивидуальные изделия.
             </p>
           </div>
 
-          <div className="mt-2 grid gap-5 md:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+
             {/* СТАТУЭТКИ */}
             <PortfolioCard
               title="Статуэтки"
@@ -293,6 +355,7 @@ export default function HomePage() {
               action="details"
               description="UV-печать, лазер, металл, акрил, дерево и другие технологии."
             />
+
           </div>
         </div>
       </section>
@@ -302,10 +365,12 @@ export default function HomePage() {
       ========================= */}
       <section
         id="services"
-        className="bg-[#f7f7f5]"
+        className="scroll-mt-20 bg-[#f7f7f5]"
       >
-        <div className="mx-auto max-w-7xl px-5 py-24">
-          <div className="grid gap-10 md:grid-cols-3 translate-y-5">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
+
+          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3 md:translate-y-5">
+
             <ServiceCard
               number="01"
               title="Дизайн"
@@ -326,6 +391,7 @@ export default function HomePage() {
               image="/images/service3.jpg"
               text="Берём на себя согласование, упаковку, документы и доставку."
             />
+
           </div>
         </div>
       </section>
@@ -335,11 +401,11 @@ export default function HomePage() {
       ========================= */}
       <footer
         id="contacts"
-        className="bg-black text-white"
+        className="scroll-mt-20 bg-black text-white"
       >
-        <div className="mx-auto max-w-7xl px-5 py-16">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-5 sm:py-16">
 
-          <div className="grid gap-10 md:grid-cols-3 md:items-start">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:items-start">
 
             {/* LOGOART */}
             <div>
@@ -356,13 +422,14 @@ export default function HomePage() {
             {/* КАРТА 2ГИС */}
             <div>
               <div className="text-sm uppercase tracking-widest text-neutral-500">
+                Мы на карте
               </div>
 
               <div className="mt-4 overflow-hidden rounded-2xl border border-neutral-800">
                 <iframe
                   src="/2gis-map.html"
                   title="LogoART на карте 2ГИС"
-                  className="h-[260px] w-full border-0"
+                  className="h-[220px] w-full border-0 sm:h-[260px]"
                   loading="lazy"
                 />
               </div>
@@ -398,7 +465,7 @@ export default function HomePage() {
 
           </div>
 
-          <div className="mt-16 border-t border-neutral-800 pt-6 text-sm text-neutral-500">
+          <div className="mt-14 border-t border-neutral-800 pt-6 text-sm text-neutral-500 sm:mt-16">
             © {new Date().getFullYear()} LogoART. Все права защищены.
           </div>
 
@@ -408,13 +475,13 @@ export default function HomePage() {
       {/* =========================
           FLOATING ACTIONS
       ========================= */}
-      <div className="fixed bottom-8 right-6 z-[99999] flex flex-col items-center gap-1">
+      <div className="fixed bottom-4 right-4 z-[99999] flex flex-col items-center gap-1 sm:bottom-8 sm:right-6">
 
         {/* СТРЕЛКА НАВЕРХ */}
         <a
           href="#top"
           aria-label="Вернуться наверх"
-          className="flex h-15 w-16 items-center justify-center pb-1 text-[#25D366] transition-transform duration-200 hover:-translate-y-1"
+          className="flex h-12 w-12 items-center justify-center pb-1 text-[#25D366] transition-transform duration-200 hover:-translate-y-1 sm:h-16 sm:w-16"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -426,6 +493,7 @@ export default function HomePage() {
             strokeWidth="2.6"
             strokeLinecap="round"
             strokeLinejoin="round"
+            className="h-10 w-10 sm:h-12 sm:w-12"
           >
             <path d="M12 25V5" />
             <path d="M6 11l6-6 6 6" />
@@ -438,13 +506,13 @@ export default function HomePage() {
           target="_blank"
           rel="noreferrer"
           aria-label="Написать в WhatsApp"
-          className="whatsapp-float relative flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_25px_rgba(0,0,0,0.25)] transition-all duration-200 hover:scale-110"
+          className="whatsapp-float relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_8px_25px_rgba(0,0,0,0.25)] transition-all duration-200 hover:scale-110 sm:h-16 sm:w-16"
         >
           <svg
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="h-9 w-9"
+            className="h-8 w-8 sm:h-9 sm:w-9"
           >
             <path
               d="M16 3C8.82 3 3 8.82 3 16c0 2.3.6 4.56 1.74 6.55L3 29l6.68-1.7A12.94 12.94 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3Z"
@@ -513,7 +581,7 @@ function ServiceCard({
         <img
           src={image}
           alt={title}
-          className="mb-5 h-50 w-50 rounded-2xl object-cover"
+          className="mb-5 h-32 w-32 rounded-2xl object-cover sm:h-40 sm:w-40"
         />
       )}
 
