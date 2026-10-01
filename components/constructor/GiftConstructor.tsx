@@ -761,19 +761,27 @@ export function GiftConstructor() {
   if (store.result) {
     return (
       <section
-        id="constructor"
-        className="mx-auto max-w-7xl px-5 py-24"
-      >
-        <ResultStep />
-      </section>
+  id="constructor"
+  className="mx-auto max-w-7xl bg-cover bg-center px-5 py-24"
+  style={{
+    backgroundImage:
+      'linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url("/images/background.jpg")',
+  }}
+>
+  <ResultStep />
+</section>
     );
   }
 
   return (
     <section
-      id="constructor"
-      className="mx-auto max-w-5xl px-5 py-24"
-    >
+  id="constructor"
+  className="mx-auto max-w-5xl bg-cover bg-center px-5 py-24"
+  style={{
+    backgroundImage:
+      'linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url("/images/background.jpg")',
+  }}
+>
       <FormProvider {...methods}>
         <div className="rounded-[2rem] border border-neutral-200 bg-white p-6 shadow-2xl shadow-black/5 md:p-10">
           <div className="mb-8">

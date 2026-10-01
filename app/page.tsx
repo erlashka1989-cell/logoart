@@ -296,9 +296,13 @@ export default function HomePage() {
           SERVICES
       ========================= */}
       <section
-        id="services"
-        className="scroll-mt-20 bg-[#f7f7f5]"
-      >
+  id="services"
+  className="scroll-mt-20 bg-cover bg-center bg-fixed"
+  style={{
+    backgroundImage:
+      'linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/images/background.jpg")',
+  }}
+>
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
 
           <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3 md:translate-y-5">
