@@ -95,7 +95,7 @@ export default function HomePage() {
             Премиальные сувениры · Дизайн · Производство · Брендирование
             </div>
 
-            <h1 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl md:text-7xl">
+            <h1 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)] md:text-7xl">
               Корпоративные подарки,
               <br className="hidden sm:block" />
               которые запоминаются.
