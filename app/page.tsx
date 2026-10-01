@@ -252,7 +252,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-2 grid gap-5 md:grid-cols-3">
-            {/* СТАТУЭТКИ РУЧНОЙ РАБОТЫ */}
+            {/* СТАТУЭТКИ */}
             <PortfolioCard
               title="Статуэтки"
               image="/images/portfolio1.jpg"
@@ -266,7 +266,7 @@ export default function HomePage() {
               description="Индивидуальные награды и премиальные корпоративные изделия."
             />
 
-            {/* CORPORATE GIFTS */}
+            {/* НАГРАДЫ */}
             <PortfolioCard
               title="НАГРАДЫ С 3D ГРАВИРОВКОЙ"
               image="/images/portfolio2.jpg"
@@ -282,7 +282,7 @@ export default function HomePage() {
               description="Подарочные наборы для сотрудников, клиентов и партнёров."
             />
 
-            {/* BRANDING */}
+            {/* ПЛАКЕТКИ */}
             <PortfolioCard
               title="ПЛАКЕТКИ"
               image="/images/portfolio3.jpg"
@@ -309,18 +309,21 @@ export default function HomePage() {
             <ServiceCard
               number="01"
               title="Дизайн"
+              image="/images/service1.jpg"
               text="Создаём концепцию, визуализацию и индивидуальный дизайн изделия."
             />
 
             <ServiceCard
               number="02"
               title="Производство"
+              image="/images/service2.jpg"
               text="Организуем изготовление, брендирование, комплектацию и контроль качества."
             />
 
             <ServiceCard
               number="03"
               title="Под ключ"
+              image="/images/service3.jpg"
               text="Берём на себя согласование, упаковку, документы и доставку."
             />
           </div>
@@ -328,14 +331,16 @@ export default function HomePage() {
       </section>
 
       {/* =========================
-          FOOTER
+          FOOTER / CONTACTS
       ========================= */}
       <footer
         id="contacts"
         className="bg-black text-white"
       >
         <div className="mx-auto max-w-7xl px-5 py-16">
-          <div className="flex flex-col justify-between gap-10 md:flex-row">
+          <div className="grid gap-10 md:grid-cols-3 md:items-start">
+
+            {/* LOGOART */}
             <div>
               <div className="text-3xl font-black">
                 LOGOART
@@ -347,6 +352,34 @@ export default function HomePage() {
               </p>
             </div>
 
+            {/* КАРТА */}
+            <div>
+              <div className="text-sm uppercase tracking-widest text-neutral-500">
+                Мы на карте
+              </div>
+
+              <div className="mt-4 overflow-hidden rounded-2xl border border-neutral-800">
+                <iframe
+                  src="https://2gis.kz/astana/search/%D0%90%D0%BB%D1%8C%D0%BC%D1%83%D0%BA%D0%B0%D0%BD%20%D0%A1%D0%B5%D0%BC%D0%B1%D0%B8%D0%BD%D0%BE%D0%B2%2013%2F1"
+                  width="100%"
+                  height="260"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  title="Карта 2ГИС"
+                />
+              </div>
+
+              <a
+                href="https://2gis.kz/astana/search/%D0%90%D0%BB%D1%8C%D0%BC%D1%83%D0%BA%D0%B0%D0%BD%20%D0%A1%D0%B5%D0%BC%D0%B1%D0%B8%D0%BD%D0%BE%D0%B2%D0%B0%2013%2F1"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-block text-sm text-neutral-400 underline underline-offset-4 transition hover:text-white"
+              >
+                Открыть в 2ГИС →
+              </a>
+            </div>
+
+            {/* АДРЕС */}
             <div>
               <div className="text-sm uppercase tracking-widest text-neutral-500">
                 Адрес
@@ -364,6 +397,7 @@ export default function HomePage() {
                 БЦ "INDUSTRIAL"
               </div>
             </div>
+
           </div>
 
           <div className="mt-16 border-t border-neutral-800 pt-6 text-sm text-neutral-500">
@@ -376,6 +410,7 @@ export default function HomePage() {
           FLOATING ACTIONS
       ========================= */}
       <div className="fixed bottom-8 right-6 z-[99999] flex flex-col items-center gap-1">
+
         {/* СТРЕЛКА НАВЕРХ */}
         <a
           href="#top"
@@ -464,21 +499,35 @@ function ServiceCard({
   number,
   title,
   text,
+  image,
 }: {
   number: string;
   title: string;
   text: string;
+  image?: string;
 }) {
   return (
     <article>
+      {/* ИКОНКА */}
+      {image && (
+        <img
+          src={image}
+          alt={title}
+          className="mb-5 h-16 w-16 rounded-xl object-cover"
+        />
+      )}
+
+      {/* НОМЕР */}
       <div className="text-sm font-semibold text-neutral-400">
         {number}
       </div>
 
+      {/* ЗАГОЛОВОК */}
       <h3 className="mt-4 text-2xl font-bold">
         {title}
       </h3>
 
+      {/* ОПИСАНИЕ */}
       <p className="mt-3 leading-7 text-neutral-500">
         {text}
       </p>
