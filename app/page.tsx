@@ -273,6 +273,9 @@ export default function HomePage() {
               detailsImages={[
                 "/images/portfolio2-2.jpg",
                 "/images/portfolio2-3.jpg",
+                "/images/portfolio2-4.jpg",
+                "/images/portfolio2-5.jpg",
+                "/images/portfolio2-6.jpg",
               ]}
               video="/images/portfolio2.mp4"
               action="details"
