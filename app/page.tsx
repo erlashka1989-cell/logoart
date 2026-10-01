@@ -24,7 +24,7 @@ export default function HomePage() {
             <img
               src="/images/Logo.png"
               alt="LogoART"
-              className="h-10 w-auto object-contain sm:h-14"
+              className="h-10 w-auto object-contain sm:h-24"
             />
           </a>
 
