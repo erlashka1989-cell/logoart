@@ -603,4 +603,3 @@ function ServiceCard({
     </article>
   );
 }
-```
