@@ -1,6 +1,6 @@
-
 import { GiftConstructor } from "@/components/constructor/GiftConstructor";
 import { PortfolioCard } from "@/components/portfolio/PortfolioCard";
+import { MobileMenu } from "@/components/MobileMenu";
 
 export default function HomePage() {
   return (
@@ -11,7 +11,7 @@ export default function HomePage() {
       {/* =========================
           HEADER
       ========================= */}
-      <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur">
+      <header className="fixed left-0 right-0 top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-5 sm:py-5">
 
           {/* LOGO */}
@@ -73,59 +73,7 @@ export default function HomePage() {
           </a>
 
           {/* MOBILE MENU */}
-          <details className="relative lg:hidden">
-            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-neutral-200 bg-white text-xl">
-              ☰
-            </summary>
-
-            <div className="absolute right-0 top-14 z-[100] w-[calc(100vw-32px)] max-w-72 rounded-2xl border border-neutral-200 bg-white p-3 shadow-2xl">
-              <nav className="flex flex-col">
-
-                <a
-                  href="#constructor"
-                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
-                >
-                  Подобрать
-                </a>
-
-                <a
-                  href="#giftsets"
-                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
-                >
-                  Подарочные наборы
-                </a>
-
-                <a
-                  href="#portfolio"
-                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
-                >
-                  Портфолио
-                </a>
-
-                <a
-                  href="#services"
-                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
-                >
-                  Услуги
-                </a>
-
-                <a
-                  href="#contacts"
-                  className="rounded-xl px-4 py-3 font-medium transition hover:bg-neutral-100"
-                >
-                  Контакты
-                </a>
-
-                <a
-                  href="#constructor"
-                  className="mt-2 rounded-xl bg-black px-4 py-3 text-center font-semibold text-white"
-                >
-                  Получить подбор
-                </a>
-
-              </nav>
-            </div>
-          </details>
+          <MobileMenu />
         </div>
       </header>
 
