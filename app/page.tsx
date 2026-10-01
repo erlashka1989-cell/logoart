@@ -356,7 +356,6 @@ export default function HomePage() {
             {/* КАРТА 2ГИС */}
             <div>
               <div className="text-sm uppercase tracking-widest text-neutral-500">
-                Мы на карте
               </div>
 
               <div className="mt-4 overflow-hidden rounded-2xl border border-neutral-800">
