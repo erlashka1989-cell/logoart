@@ -13,7 +13,7 @@ const flakes = Array.from({ length: 35 }, (_, index) => ({
 
 export function WinterEffects() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -21,6 +21,7 @@ export function WinterEffects() {
     if (!audio) return;
 
     audio.volume = 0.25;
+    audio.loop = true;
 
     const startMusic = async () => {
       try {
@@ -30,9 +31,11 @@ export function WinterEffects() {
         document.removeEventListener("click", startMusic);
         document.removeEventListener("touchstart", startMusic);
       } catch {
-        // Браузер заблокировал запуск — ждём следующего взаимодействия
+        // Автозапуск заблокирован браузером.
       }
     };
+
+    startMusic();
 
     document.addEventListener("click", startMusic);
     document.addEventListener("touchstart", startMusic);
@@ -83,8 +86,15 @@ export function WinterEffects() {
       </div>
 
       {/* MUSIC */}
-      <audio ref={audioRef} src="/music/background.mp3" loop preload="auto" />
+      <audio
+        ref={audioRef}
+        src="/music/background.mp3"
+        autoPlay
+        loop
+        preload="auto"
+      />
 
+      {/* MUSIC BUTTON */}
       <button
         type="button"
         onClick={toggleMusic}
