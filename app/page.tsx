@@ -300,7 +300,7 @@ export default function HomePage() {
   className="scroll-mt-20 bg-cover bg-center bg-fixed"
   style={{
     backgroundImage:
-      'linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/images/background.jpg")',
+      'linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/images/background2.jpg")',
   }}
 >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
