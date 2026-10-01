@@ -762,7 +762,7 @@ export function GiftConstructor() {
     return (
       <section
   id="constructor"
-  className="mx-auto max-w-7xl bg-cover bg-center px-5 py-24"
+  className="bg-cover bg-center px-5 py-24"
   style={{
     backgroundImage:
       'linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url("/images/background2.jpg")',
@@ -776,7 +776,7 @@ export function GiftConstructor() {
   return (
     <section
   id="constructor"
-  className="mx-auto max-w-5xl bg-cover bg-center px-5 py-24"
+  className="bg-cover bg-center px-5 py-24"
   style={{
     backgroundImage:
       'linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url("/images/background2.jpg")',
