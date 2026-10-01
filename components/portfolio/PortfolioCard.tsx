@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type PortfolioCardProps = {
   title: string;
@@ -21,6 +21,30 @@ export function PortfolioCard({
 }: PortfolioCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  useEffect(() => {
+  if (!isOpen) {
+    return;
+  }
+
+  const scrollY = window.scrollY;
+  const body = document.body;
+
+  body.style.position = "fixed";
+  body.style.top = `-${scrollY}px`;
+  body.style.left = "0";
+  body.style.right = "0";
+  body.style.overflow = "hidden";
+
+  return () => {
+    body.style.position = "";
+    body.style.top = "";
+    body.style.left = "";
+    body.style.right = "";
+    body.style.overflow = "";
+
+    window.scrollTo(0, scrollY);
+  };
+}, [isOpen]);
 
   const slides = [
     ...(image
@@ -122,7 +146,7 @@ export function PortfolioCard({
       ========================= */}
       {isOpen && currentSlide && (
         <div
-          className="fixed inset-0 z-[100000] flex items-center justify-center p-5"
+          className="fixed inset-0 z-[999999] flex items-center justify-center p-5"
           onClick={closeGallery}
         >
           {/* РАЗМЫТЫЙ ФОН */}
@@ -159,7 +183,7 @@ export function PortfolioCard({
               <img
                 src={currentSlide.src}
                 alt={title}
-                className="max-h-[80vh] max-w-[82vw] rounded-2xl object-contain shadow-2xl"
+                className="max-h-[76vh] max-w-[82vw] -translate-y-10 rounded-2xl object-contain shadow-2xl"
               />
             ) : (
               <video
