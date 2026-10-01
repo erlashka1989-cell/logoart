@@ -252,7 +252,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-2 grid gap-5 md:grid-cols-3">
-            {/* СТАТУЭТКИ */}
+            {/* СТАТУЭТКИ РУЧНОЙ РАБОТЫ */}
             <PortfolioCard
               title="Статуэтки"
               image="/images/portfolio1.jpg"
@@ -268,7 +268,7 @@ export default function HomePage() {
 
             {/* CORPORATE GIFTS */}
             <PortfolioCard
-              title="Corporate Gifts"
+              title="НАГРАДЫ С 3D ГРАВИРОВКОЙ"
               image="/images/portfolio2.jpg"
               detailsImages={[
                 "/images/portfolio2-2.jpg",
@@ -281,7 +281,7 @@ export default function HomePage() {
 
             {/* BRANDING */}
             <PortfolioCard
-              title="Branding"
+              title="ПЛАКЕТКИ"
               image="/images/portfolio3.jpg"
               detailsImages={[
                 "/images/portfolio3-2.jpg",
