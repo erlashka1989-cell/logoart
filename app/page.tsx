@@ -1,6 +1,7 @@
 import { GiftConstructor } from "@/components/constructor/GiftConstructor";
 import { PortfolioCard } from "@/components/portfolio/PortfolioCard";
 import { MobileMenu } from "@/components/MobileMenu";
+import { WinterEffects } from "@/components/WinterEffects";
 
 export default function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default function HomePage() {
       id="top"
       className="min-h-screen overflow-x-hidden bg-[#f7f7f5] text-neutral-950"
     >
+      <WinterEffects />
       {/* =========================
           HEADER
       ========================= */}
