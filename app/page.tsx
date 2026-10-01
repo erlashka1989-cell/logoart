@@ -514,7 +514,7 @@ function ServiceCard({
         <img
           src={image}
           alt={title}
-          className="mb-5 h-24 w-24 rounded-2xl object-cover"
+          className="mb-5 h-34 w-34 rounded-2xl object-cover"
         />
       )}
 
