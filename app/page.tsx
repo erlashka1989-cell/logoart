@@ -331,13 +331,14 @@ export default function HomePage() {
       </section>
 
       {/* =========================
-          FOOTER / CONTACTS
+          CONTACTS
       ========================= */}
       <footer
         id="contacts"
         className="bg-black text-white"
       >
         <div className="mx-auto max-w-7xl px-5 py-16">
+
           <div className="grid gap-10 md:grid-cols-3 md:items-start">
 
             {/* LOGOART */}
@@ -352,7 +353,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* КАРТА */}
+            {/* КАРТА 2ГИС */}
             <div>
               <div className="text-sm uppercase tracking-widest text-neutral-500">
                 Мы на карте
@@ -360,17 +361,15 @@ export default function HomePage() {
 
               <div className="mt-4 overflow-hidden rounded-2xl border border-neutral-800">
                 <iframe
-                  src="https://2gis.kz/astana/search/%D0%90%D0%BB%D1%8C%D0%BC%D1%83%D0%BA%D0%B0%D0%BD%20%D0%A1%D0%B5%D0%BC%D0%B1%D0%B8%D0%BD%D0%BE%D0%B2%2013%2F1"
-                  width="100%"
-                  height="260"
-                  style={{ border: 0 }}
+                  src="/2gis-map.html"
+                  title="LogoART на карте 2ГИС"
+                  className="h-[260px] w-full border-0"
                   loading="lazy"
-                  title="Карта 2ГИС"
                 />
               </div>
 
               <a
-                href="https://2gis.kz/astana/search/%D0%90%D0%BB%D1%8C%D0%BC%D1%83%D0%BA%D0%B0%D0%BD%20%D0%A1%D0%B5%D0%BC%D0%B1%D0%B8%D0%BD%D0%BE%D0%B2%D0%B0%2013%2F1"
+                href="https://2gis.kz/nur_sultan/firm/70000001104791408"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-3 inline-block text-sm text-neutral-400 underline underline-offset-4 transition hover:text-white"
@@ -403,6 +402,7 @@ export default function HomePage() {
           <div className="mt-16 border-t border-neutral-800 pt-6 text-sm text-neutral-500">
             © {new Date().getFullYear()} LogoART. Все права защищены.
           </div>
+
         </div>
       </footer>
 
@@ -460,6 +460,7 @@ export default function HomePage() {
 
           <span className="whatsapp-pulse"></span>
         </a>
+
       </div>
     </main>
   );
@@ -513,7 +514,7 @@ function ServiceCard({
         <img
           src={image}
           alt={title}
-          className="mb-5 h-16 w-16 rounded-xl object-cover"
+          className="mb-5 h-24 w-24 rounded-2xl object-cover"
         />
       )}
 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LogoART — 2ГИС</title>
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: white;
+    }
+
+    .map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .dg-widget-link {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <a
+    class="dg-widget-link"
+    href="https://2gis.kz/nur_sultan/firm/70000001104791408/center/71.45103871822359,51.172061786833176/zoom/18"
+  >
+    Посмотреть на карте Астаны
+  </a>
+
+  <div class="dg-widget-link">
+    <a
+      href="https://2gis.kz/nur_sultan/firm/70000001104791408/photos/70000001104791408/center/71.45103871822359,51.172061786833176/zoom/17"
+    >
+      Фотографии компании
+    </a>
+  </div>
+
+  <div class="dg-widget-link">
+    <a
+      href="https://2gis.kz/nur_sultan/center/71.451015,51.171899/zoom/18/routeTab/rsType/bus/to/71.451015,51.171899╎LogoArt"
+    >
+      Найти проезд до LogoArt
+    </a>
+  </div>
+
+  <script
+    charset="utf-8"
+    src="https://widgets.2gis.com/js/DGWidgetLoader.js"
+  ></script>
+
+  <script charset="utf-8">
+    new DGWidgetLoader({
+      "width": "100%",
+      "height": "100%",
+      "borderColor": "#a3a3a3",
+      "pos": {
+        "lat": 51.172061786833176,
+        "lon": 71.45103871822359,
+        "zoom": 18
+      },
+      "opt": {
+        "city": "nur_sultan"
+      },
+      "org": [
+        {
+          "id": "70000001104791408"
+        }
+      ]
+    });
+  </script>
+
+  <noscript
+    style="
+      color: #c00;
+      font-size: 16px;
+      font-weight: bold;
+    "
+  >
+    Виджет карты использует JavaScript.
+    Включите его в настройках вашего браузера.
+  </noscript>
+
+</body>
+</html>
