@@ -25,7 +25,12 @@ export function PortfolioCard({
 
   const slides = [
     ...(image
-      ? [{ type: "image" as const, src: image }]
+      ? [
+          {
+            type: "image" as const,
+            src: image,
+          },
+        ]
       : []),
 
     ...detailsImages.map((src) => ({
@@ -34,22 +39,20 @@ export function PortfolioCard({
     })),
 
     ...(video
-      ? [{ type: "video" as const, src: video }]
+      ? [
+          {
+            type: "video" as const,
+            src: video,
+          },
+        ]
       : []),
   ];
 
-  /*
-   * Блокируем прокрутку страницы,
-   * пока открыта галерея.
-   */
+  // Блокируем прокрутку страницы при открытой галерее
   useEffect(() => {
     if (!isOpen) {
       return;
     }
-    
-    useEffect(() => {
-  // управление клавиатурой
-}, [isOpen, slides.length]);
 
     const scrollY = window.scrollY;
     const body = document.body;
@@ -72,6 +75,42 @@ export function PortfolioCard({
       window.scrollTo(0, scrollY);
     };
   }, [isOpen]);
+
+  // Управление галереей клавиатурой
+  useEffect(() => {
+    if (!isOpen || slides.length <= 1) {
+      return;
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+
+        setCurrentIndex((current) =>
+          current === slides.length - 1 ? 0 : current + 1
+        );
+      }
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+
+        setCurrentIndex((current) =>
+          current === 0 ? slides.length - 1 : current - 1
+        );
+      }
+
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setIsOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, slides.length]);
 
   function openGallery() {
     if (slides.length === 0) {
@@ -111,82 +150,83 @@ export function PortfolioCard({
 
   const currentSlide = slides[currentIndex];
 
-  const gallery = isOpen && currentSlide ? (
-    <div
-      className="fixed inset-0 z-[999999] flex items-center justify-center"
-      onClick={closeGallery}
-    >
-      {/* РАЗМЫТЫЙ ФОН */}
-      <div className="absolute inset-0 bg-white/95 backdrop-blur-2xl" />
-
-      {/* КРЕСТИК */}
-      <button
-        type="button"
+  const gallery =
+    isOpen && currentSlide ? (
+      <div
+        className="fixed inset-0 z-[999999] flex items-center justify-center"
         onClick={closeGallery}
-        aria-label="Закрыть"
-        className="absolute right-6 top-3 z-30 text-5xl font-light text-black transition hover:opacity-50"
       >
-        ×
-      </button>
+        {/* ФОН */}
+        <div className="absolute inset-0 bg-white/95 backdrop-blur-2xl" />
 
-      {/* СТРЕЛКА ВЛЕВО */}
-      {slides.length > 1 && (
+        {/* КРЕСТИК */}
         <button
           type="button"
-          onClick={previousSlide}
-          aria-label="Предыдущий слайд"
-          className="absolute left-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
+          onClick={closeGallery}
+          aria-label="Закрыть"
+          className="absolute right-6 top-3 z-30 text-5xl font-light text-black transition hover:opacity-50"
         >
-          ‹
+          ×
         </button>
-      )}
 
-      {/* ОСНОВНОЙ КОНТЕНТ */}
-      <div
-        className="relative z-20 flex max-h-[82vh] max-w-[84vw] -translate-y-10 items-center justify-center"
-        onClick={(event) => event.stopPropagation()}
-      >
-        {currentSlide.type === "image" ? (
-          <img
-            src={currentSlide.src}
-            alt={title}
-            className="max-h-[76vh] max-w-[82vw] rounded-2xl object-contain shadow-2xl"
-          />
-        ) : (
-          <video
-            src={currentSlide.src}
-            controls
-            autoPlay
-            className="max-h-[76vh] max-w-[82vw] rounded-2xl bg-black object-contain shadow-2xl"
-          />
+        {/* СТРЕЛКА ВЛЕВО */}
+        {slides.length > 1 && (
+          <button
+            type="button"
+            onClick={previousSlide}
+            aria-label="Предыдущий слайд"
+            className="absolute left-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
+          >
+            ‹
+          </button>
+        )}
+
+        {/* ФОТО / ВИДЕО */}
+        <div
+          className="relative z-20 flex max-h-[82vh] max-w-[84vw] -translate-y-10 items-center justify-center"
+          onClick={(event) => event.stopPropagation()}
+        >
+          {currentSlide.type === "image" ? (
+            <img
+              src={currentSlide.src}
+              alt={title}
+              className="max-h-[76vh] max-w-[82vw] rounded-2xl object-contain shadow-2xl"
+            />
+          ) : (
+            <video
+              src={currentSlide.src}
+              controls
+              autoPlay
+              className="max-h-[76vh] max-w-[82vw] rounded-2xl bg-black object-contain shadow-2xl"
+            />
+          )}
+        </div>
+
+        {/* СТРЕЛКА ВПРАВО */}
+        {slides.length > 1 && (
+          <button
+            type="button"
+            onClick={nextSlide}
+            aria-label="Следующий слайд"
+            className="absolute right-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
+          >
+            ›
+          </button>
+        )}
+
+        {/* НОМЕР СЛАЙДА */}
+        {slides.length > 1 && (
+          <div className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black/10 px-4 py-2 text-sm font-medium text-black backdrop-blur">
+            {currentIndex + 1} / {slides.length}
+          </div>
         )}
       </div>
-
-      {/* СТРЕЛКА ВПРАВО */}
-      {slides.length > 1 && (
-        <button
-          type="button"
-          onClick={nextSlide}
-          aria-label="Следующий слайд"
-          className="absolute right-5 top-1/2 z-30 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full bg-black/10 text-4xl text-black backdrop-blur transition hover:bg-black/20"
-        >
-          ›
-        </button>
-      )}
-
-      {/* НОМЕР СЛАЙДА */}
-      {slides.length > 1 && (
-        <div className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-full bg-black/10 px-4 py-2 text-sm font-medium text-black backdrop-blur">
-          {currentIndex + 1} / {slides.length}
-        </div>
-      )}
-    </div>
-  ) : null;
+    ) : null;
 
   return (
     <>
       <article className="rounded-3xl border border-neutral-200 bg-neutral-50 p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-xl">
-        {/* ФОТО */}
+        {/* ОСНОВНОЕ ФОТО */}
         <button
           type="button"
           onClick={openGallery}
@@ -228,11 +268,7 @@ export function PortfolioCard({
         )}
       </article>
 
-      {/* ВАЖНО:
-          выводим галерею ПРЯМО В BODY,
-          поэтому translate-y-3 у родительского
-          блока больше никак не влияет.
-      */}
+      {/* ГАЛЕРЕЯ ВЫВОДИТСЯ ПРЯМО В BODY */}
       {typeof document !== "undefined" &&
         createPortal(gallery, document.body)}
     </>
