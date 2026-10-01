@@ -89,7 +89,7 @@ export default function HomePage() {
 }}
       >
         <div className="mx-auto flex min-h-[560px] max-w-7xl items-center px-5 py-16 sm:py-20 md:-translate-y-10 md:px-5 lg:-translate-y-15">
-          <div className="relative top-10 max-w-4xl text-white">
+          <div className="relative top-14 max-w-3xl text-white">
 
             <div className="relative top-8 mb-5 inline-flex max-w-full rounded-full border border-white/30 bg-black/20 px-4 py-2 text-center text-xs text-white/90 backdrop-blur sm:mb-6 sm:text-sm">
             Премиальные сувениры · Дизайн · Производство · Брендирование
