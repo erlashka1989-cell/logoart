@@ -25,7 +25,7 @@ export default function HomePage() {
             <img
               src="/images/Logo.png"
               alt="LogoART"
-              className="h-20 w-auto object-contain sm:h-14"
+              className="h-12 w-auto object-contain sm:h-14"
             />
           </a>
 
@@ -96,7 +96,7 @@ export default function HomePage() {
             Премиальные сувениры · Дизайн · Производство · Брендирование
             </div>
 
-            <h1 className="text-3xl font-black leading-tight tracking-tight sm:text-4xl drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)] md:text-7xl">
+            <h1 className="max-w-[360px] text-[34px] font-bold leading-[1.08] sm:max-w-none sm:text-4xl md:text-7xl">
               Корпоративные подарки,
               <br className="hidden sm:block" />
               которые запоминаются.
