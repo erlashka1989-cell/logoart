@@ -11,6 +11,7 @@ export default function HomePage() {
       className="min-h-screen overflow-x-hidden bg-[#f7f7f5] text-neutral-950"
     >
       <WinterEffects />
+      <SantaAnimation />
       {/* =========================
           HEADER
       ========================= */}
@@ -96,11 +97,14 @@ export default function HomePage() {
             Премиальные сувениры · Дизайн · Производство · Брендирование
             </div>
 
-            <h1 className="max-w-[360px] text-[34px] font-bold leading-[1.08] sm:max-w-none sm:text-4xl md:text-7xl">
-              Корпоративные подарки,
-              <br className="hidden sm:block" />
-              которые запоминаются.
-            </h1>
+            <h1
+  className="max-w-[360px] text-[34px] font-bold leading-[1.08] sm:max-w-none sm:text-4xl md:text-7xl"
+  style={{
+    textShadow: "0 4px 14px rgba(0, 0, 0, 0.45)",
+  }}
+>
+  Корпоративные подарки, которые запоминаются.
+</h1>
 
             <p className="mt-4 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8 md:text-xl">
               Разрабатываем и производим премиальные
@@ -521,8 +525,7 @@ function ServiceCard({
           className="mb-5 h-32 w-32 rounded-2xl object-cover sm:h-40 sm:w-40"
         />
       )}
-      <SantaAnimation />
-
+      
       {/* НОМЕР */}
       <div className="text-sm font-semibold text-neutral-400">
         {number}
