@@ -306,7 +306,7 @@ export default function HomePage() {
   className="scroll-mt-20 bg-cover bg-center bg-fixed"
   style={{
     backgroundImage:
-      'linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/images/background3.jpg")',
+      'linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/images/background2.jpg")',
   }}
 >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
@@ -316,21 +316,21 @@ export default function HomePage() {
             <ServiceCard
               number="01"
               title="Дизайн"
-              image="/images/service1.jpg"
+              image="/images/service1.png"
               text="Создаём концепцию, визуализацию и индивидуальный дизайн изделия."
             />
 
             <ServiceCard
               number="02"
               title="Производство"
-              image="/images/service2.jpg"
+              image="/images/service2.png"
               text="Организуем изготовление, брендирование, комплектацию и контроль качества."
             />
 
             <ServiceCard
               number="03"
               title="Под ключ"
-              image="/images/service3.jpg"
+              image="/images/service3.png"
               text="Берём на себя согласование, упаковку, документы и доставку."
             />
 
