@@ -2,6 +2,7 @@ import { GiftConstructor } from "@/components/constructor/GiftConstructor";
 import { PortfolioCard } from "@/components/portfolio/PortfolioCard";
 import { MobileMenu } from "@/components/MobileMenu";
 import { WinterEffects } from "@/components/WinterEffects";
+import SantaAnimation from "@/components/SantaAnimation";
 
 export default function HomePage() {
   return (
@@ -520,6 +521,7 @@ function ServiceCard({
           className="mb-5 h-32 w-32 rounded-2xl object-cover sm:h-40 sm:w-40"
         />
       )}
+      <SantaAnimation />
 
       {/* НОМЕР */}
       <div className="text-sm font-semibold text-neutral-400">
