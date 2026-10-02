@@ -59,8 +59,8 @@ export default function SantaAnimation() {
 
         {showMessage && (
   <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full rounded-2xl bg-white px-5 py-3 text-center text-sm font-bold shadow-xl">
-    <div>ХО-ХО-ХО! 🎅</div>
-    <div className="mt-2">"LogoArt" дарит подарки!</div>
+    <div>ХО-ХО-ХО!</div>
+    <div className="mt-2">"LogoArt" дарит подарки!🎅</div>
   </div>
 )}
       </div>
