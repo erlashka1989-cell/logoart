@@ -4,39 +4,28 @@ import { useEffect, useState } from "react";
 
 export default function SantaAnimation() {
   const [showMessage, setShowMessage] = useState(false);
-  const [isMoving, setIsMoving] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isMoving, setIsMoving] = useState(true);
 
   useEffect(() => {
-    let waveTimer: NodeJS.Timeout;
-    let restartTimer: NodeJS.Timeout;
+    let stopTimer: ReturnType<typeof setTimeout>;
+    let restartTimer: ReturnType<typeof setTimeout>;
 
-    const startAnimation = () => {
-      setIsVisible(true);
-      setShowMessage(false);
+    const startSanta = () => {
       setIsMoving(true);
 
-      // Через 7 секунд останавливаем Деда Мороза
-      waveTimer = setTimeout(() => {
+      stopTimer = setTimeout(() => {
         setIsMoving(false);
 
-        // Через 2.5 секунды снова начинает движение
         restartTimer = setTimeout(() => {
-          setIsMoving(true);
+          startSanta();
         }, 2500);
       }, 7000);
     };
 
-    startAnimation();
-
-    // Повторяем появление каждые 15 секунд
-    const interval = setInterval(() => {
-      startAnimation();
-    }, 15000);
+    startSanta();
 
     return () => {
-      clearInterval(interval);
-      clearTimeout(waveTimer);
+      clearTimeout(stopTimer);
       clearTimeout(restartTimer);
     };
   }, []);
@@ -54,23 +43,8 @@ export default function SantaAnimation() {
           }
         }
 
-        @keyframes santaBounce {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-
-          50% {
-            transform: translateY(-6px);
-          }
-        }
-
         .santa-ride {
-          animation: santaRide 15s linear infinite;
-        }
-
-        .santa-bounce {
-          animation: santaBounce 0.7s ease-in-out infinite;
+          animation: santaRide 15s linear;
         }
 
         @media (max-width: 640px) {
@@ -80,63 +54,69 @@ export default function SantaAnimation() {
         }
       `}</style>
 
-      <div
-        className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden"
-        aria-hidden="true"
-      >
-        {isVisible && (
+      <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
+        <div
+          className={`absolute bottom-4 ${
+            isMoving ? "santa-ride" : ""
+          }`}
+          style={{
+            right: isMoving ? "-450px" : "42%",
+            transition: isMoving
+              ? "none"
+              : "right 0.8s ease-in-out",
+          }}
+        >
           <div
-            className={`absolute bottom-0 ${
-              isMoving ? "santa-ride" : "santa-bounce"
-            }`}
-            style={{
-              right: isMoving ? "-550px" : "42%",
-              transition: isMoving
-                ? "none"
-                : "right 0.8s ease-in-out",
-            }}
+            className="pointer-events-auto relative cursor-pointer"
+            onClick={() => setShowMessage((prev) => !prev)}
           >
+            {/* КРУГЛАЯ ОБЛАСТЬ — всё лишнее режется */}
             <div
-              className="pointer-events-auto relative cursor-pointer"
-              onClick={() => setShowMessage(!showMessage)}
+              className="
+                h-[350px] w-[350px]
+                overflow-hidden
+                rounded-full
+                bg-white
+                shadow-2xl
+                sm:h-[450px] sm:w-[450px]
+              "
             >
-              {/* Дед Мороз — твоя MP4 анимация */}
               <video
                 src="/santa.mp4"
                 autoPlay
                 muted
                 loop
                 playsInline
-                className="w-[450px] sm:w-[550px] drop-shadow-2xl"
+                className="
+                  h-full
+                  w-full
+                  object-cover
+                "
               />
-
-              {/* Сообщение при клике */}
-              {showMessage && (
-                <div
-                  className="absolute bottom-full right-10 mb-4 w-64 rounded-2xl border border-gray-200 bg-white p-4 text-center shadow-2xl"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <div className="mb-1 text-3xl">🎁</div>
-
-                  <div className="text-lg font-bold text-gray-900">
-                    Хо-хо-хо!
-                  </div>
-
-                  <div className="mt-1 text-sm text-gray-500">
-                    Подарки уже близко 🎄
-                  </div>
-
-                  <button
-                    onClick={() => setShowMessage(false)}
-                    className="mt-3 rounded-full bg-black px-4 py-1.5 text-xs text-white transition hover:bg-gray-800"
-                  >
-                    Закрыть
-                  </button>
-                </div>
-              )}
             </div>
+
+            {showMessage && (
+              <div
+                className="
+                  absolute
+                  -top-16
+                  left-1/2
+                  -translate-x-1/2
+                  whitespace-nowrap
+                  rounded-2xl
+                  bg-white
+                  px-5
+                  py-3
+                  text-lg
+                  font-bold
+                  shadow-xl
+                "
+              >
+                🎅 Хо-хо-хо!
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </>
   );
