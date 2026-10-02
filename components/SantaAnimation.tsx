@@ -1,17 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SantaAnimation() {
+  const [visible, setVisible] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(() => {
+    // Первое появление через 1 секунду
+    const firstTimer = setTimeout(() => {
+      setVisible(true);
+    }, 1000);
+
+    // Цикл:
+    // 7 секунд показывается
+    // 8 секунд скрыт
+    const interval = setInterval(() => {
+      setVisible((prev) => !prev);
+      setShowMessage(false);
+    }, 15000);
+
+    return () => {
+      clearTimeout(firstTimer);
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[9999]">
       <div
-        className="pointer-events-auto absolute bottom-5 left-5 cursor-pointer"
+        className={`
+          pointer-events-auto
+          fixed
+          bottom-0
+          left-0
+          cursor-pointer
+          transition-all
+          duration-1000
+          ease-in-out
+          ${
+            visible
+              ? "translate-x-0 translate-y-0 opacity-100"
+              : "-translate-x-full translate-y-10 opacity-0"
+          }
+        `}
         onClick={() => setShowMessage((prev) => !prev)}
       >
-        <div className="h-[350px] w-[350px] overflow-hidden rounded-full bg-white shadow-2xl sm:h-[450px] sm:w-[450px]">
+        <div className="h-[250px] w-[250px] overflow-hidden rounded-full bg-white shadow-2xl sm:h-[450px] sm:w-[450px]">
           <video
             src="/santa.mp4"
             autoPlay
@@ -23,7 +58,7 @@ export default function SantaAnimation() {
         </div>
 
         {showMessage && (
-          <div className="absolute -top-16 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-2xl bg-white px-5 py-3 text-lg font-bold shadow-xl">
+          <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-2xl bg-white px-5 py-3 text-lg font-bold shadow-xl">
             Хо-хо-хо! 🎅
           </div>
         )}
