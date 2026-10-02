@@ -29,7 +29,7 @@ export default function HomePage() {
           </a>
 
           {/* DESKTOP NAVIGATION */}
-          <nav className="hidden items-center gap-6 text-sm font-medium lg:flex xl:gap-8">
+           <nav className="hidden items-center gap-6 text-base font-medium lg:flex xl:gap-8">
             <a
               href="#constructor"
               className="transition hover:text-neutral-500"
@@ -69,7 +69,7 @@ export default function HomePage() {
           {/* DESKTOP BUTTON */}
           <a
             href="#constructor"
-            className="hidden rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 lg:block"
+            className="hidden rounded-full bg-black px-5 py-2.5 text-base font-semibold text-white transition hover:bg-neutral-800 lg:block"
           >
             Получить подбор
           </a>
@@ -136,7 +136,7 @@ export default function HomePage() {
       ========================= */}
       <section
         id="giftsets"
-        className="scroll-mt-8 border-t border-neutral-200 bg-white"
+        className="scroll-mt-6 border-t border-neutral-200 bg-white"
       >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
 
@@ -224,7 +224,7 @@ export default function HomePage() {
       ========================= */}
       <section
         id="portfolio"
-        className="scroll-mt-8 border-t border-neutral-200 bg-white"
+        className="scroll-mt-6 border-t border-neutral-200 bg-white"
       >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
 
