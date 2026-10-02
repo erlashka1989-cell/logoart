@@ -85,17 +85,18 @@ export default function HomePage() {
           HERO
       ========================= */}
       <section
-        className="relative min-h-[560px] overflow-hidden bg-cover bg-center bg-no-repeat"
-        style={{
-  backgroundImage: 'url("/images/background.jpg")',
-}}
-      >
-        <div className="mx-auto flex min-h-[560px] max-w-7xl items-center px-5 py-16 sm:py-20 md:-translate-y-10 md:px-5 lg:-translate-y-15">
-          <div className="relative top-16 max-w-4xl text-white">
+  className="relative min-h-[560px] overflow-hidden"
+>
+  <div
+    className="absolute inset-0 bg-cover bg-center bg-[url('/images/background-mobile.jpg')] sm:bg-[url('/images/background.jpg')]"
+  />
 
-            <div className="relative top-8 mb-8 inline-flex max-w-full rounded-full border border-white/30 bg-black/20 px-4 py-2 text-center text-xs text-white/90 backdrop-blur sm:mb-6 sm:text-sm">
-            Премиальные сувениры · Дизайн · Производство · Брендирование
-            </div>
+  <div className="relative mx-auto flex min-h-[560px] max-w-7xl items-center px-5 py-16 sm:py-20 md:-translate-y-10 md:px-5 lg:-translate-y-15">
+    <div className="relative top-20 max-w-4xl text-white sm:top-16">
+
+      <div className="relative top-8 mb-8 inline-flex max-w-full rounded-full border border-white/30 bg-black/20 px-4 py-2 text-center text-xs text-white/90 backdrop-blur sm:mb-6 sm:text-sm">
+        Премиальные сувениры · Дизайн · Производство · Брендирование
+      </div>
 
             <h1
   className="max-w-[360px] text-[34px] font-bold leading-[1.08] sm:max-w-none sm:text-4xl md:text-7xl"
@@ -305,7 +306,7 @@ export default function HomePage() {
   className="scroll-mt-20 bg-cover bg-center bg-fixed"
   style={{
     backgroundImage:
-      'linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/images/background2.jpg")',
+      'linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/images/background3.jpg")',
   }}
 >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
