@@ -46,16 +46,16 @@ export default function SantaAnimation() {
         `}
         onClick={() => setShowMessage((prev) => !prev)}
       >
-        <div className="h-[350px] w-[350px] overflow-hidden rounded-full bg-white shadow-2xl sm:h-[450px] sm:w-[450px]">
-          <video
-            src="/santa.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="h-full w-full object-cover"
-          />
-        </div>
+        <div className="h-[250px] w-[250px] overflow-hidden rounded-full bg-white shadow-2xl sm:h-[600px] sm:w-[600px]">
+  <video
+    src="/santa.mp4"
+    autoPlay
+    muted
+    loop
+    playsInline
+    className="h-full w-full object-cover scale-125"
+  />
+</div>
 
         {showMessage && (
           <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-2xl bg-white px-5 py-3 text-lg font-bold shadow-xl">
