@@ -46,7 +46,7 @@ export default function SantaAnimation() {
         `}
         onClick={() => setShowMessage((prev) => !prev)}
       >
-        <div className="h-[250px] w-[250px] overflow-hidden rounded-full bg-white shadow-2xl sm:h-[450px] sm:w-[450px]">
+        <div className="h-[350px] w-[350px] overflow-hidden rounded-full bg-white shadow-2xl sm:h-[450px] sm:w-[450px]">
           <video
             src="/santa.mp4"
             autoPlay
