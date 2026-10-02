@@ -136,7 +136,7 @@ export default function HomePage() {
       ========================= */}
       <section
         id="giftsets"
-        className="scroll-mt-20 border-t border-neutral-200 bg-white"
+        className="scroll-mt-14 border-t border-neutral-200 bg-white"
       >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
 
@@ -224,7 +224,7 @@ export default function HomePage() {
       ========================= */}
       <section
         id="portfolio"
-        className="scroll-mt-20 border-t border-neutral-200 bg-white"
+        className="scroll-mt-14 border-t border-neutral-200 bg-white"
       >
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-5 sm:py-24">
 
