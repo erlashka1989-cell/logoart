@@ -87,13 +87,13 @@ export default function HomePage() {
       <section className="relative overflow-hidden">
         {/* MOBILE HERO */}
         <div className="relative block min-h-[760px] sm:hidden">
-          {/* Верхняя брендированная часть */}
+          {/* Полный мобильный фон — зелёная нижняя часть уже есть в изображении */}
           <div
-            className="absolute inset-x-0 top-0 h-[430px] bg-cover bg-center bg-[url('/images/background-mobile.jpg')]"
+            className="absolute inset-0 bg-cover bg-center bg-[url('/images/background-mobile.jpg')]"
           />
 
-          {/* Кнопки поверх брендированной части */}
-          <div className="absolute left-1/2 top-[285px] z-10 flex w-[calc(100%-40px)] -translate-x-1/2 flex-col items-center gap-3">
+          {/* Кнопки подняты выше на брендированную часть */}
+          <div className="absolute left-1/2 top-[205px] z-10 flex w-[calc(100%-40px)] -translate-x-1/2 flex-col items-center gap-3">
             <a
               href="#constructor"
               className="w-full max-w-[300px] rounded-xl bg-white px-5 py-3.5 text-center font-semibold text-black shadow-lg transition active:scale-[0.98]"
@@ -109,8 +109,8 @@ export default function HomePage() {
             </a>
           </div>
 
-          {/* Нижняя зелёная часть */}
-          <div className="absolute inset-x-0 bottom-0 min-h-[350px] bg-[#6f8f55] px-5 pb-12 pt-10 text-white">
+          {/* Основной текст опущен вниз на зелёную часть изображения */}
+          <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-10 pt-8 text-white">
             <div className="mx-auto max-w-md">
               <div className="mb-5 inline-flex rounded-full border border-white/30 bg-black/10 px-4 py-2 text-center text-xs text-white/90">
                 Премиальные сувениры · Дизайн · Производство · Брендирование
