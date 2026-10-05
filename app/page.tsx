@@ -84,55 +84,94 @@ export default function HomePage() {
       {/* =========================
           HERO
       ========================= */}
-      <section
-  className="relative min-h-[560px] overflow-hidden"
->
-  <div
-    className="absolute inset-0 bg-cover bg-center bg-[url('/images/background-mobile.jpg')] sm:bg-[url('/images/background.jpg')]"
-  />
+      <section className="relative overflow-hidden">
+        {/* MOBILE HERO */}
+        <div className="relative block min-h-[760px] sm:hidden">
+          {/* Верхняя брендированная часть */}
+          <div
+            className="absolute inset-x-0 top-0 h-[430px] bg-cover bg-center bg-[url('/images/background-mobile.jpg')]"
+          />
 
-  <div className="relative mx-auto flex min-h-[560px] max-w-7xl items-center px-5 py-16 sm:py-20 md:-translate-y-10 md:px-5 lg:-translate-y-15">
-    <div className="relative top-20 max-w-4xl text-white sm:top-16">
+          {/* Кнопки поверх брендированной части */}
+          <div className="absolute left-1/2 top-[285px] z-10 flex w-[calc(100%-40px)] -translate-x-1/2 flex-col items-center gap-3">
+            <a
+              href="#constructor"
+              className="w-full max-w-[300px] rounded-xl bg-white px-5 py-3.5 text-center font-semibold text-black shadow-lg transition active:scale-[0.98]"
+            >
+              Подобрать подарок
+            </a>
 
-      <div className="relative top-8 mb-8 inline-flex max-w-full rounded-full border border-white/30 bg-black/20 px-4 py-2 text-center text-xs text-white/90 backdrop-blur sm:mb-6 sm:text-sm">
-        Премиальные сувениры · Дизайн · Производство · Брендирование
-      </div>
+            <a
+              href="#portfolio"
+              className="w-full max-w-[300px] rounded-xl border border-white/50 bg-black/20 px-5 py-3.5 text-center font-semibold text-white shadow-lg backdrop-blur transition active:scale-[0.98]"
+            >
+              Смотреть проекты
+            </a>
+          </div>
 
-            <h1
-  className="max-w-[360px] text-[34px] font-bold leading-[1.08] sm:max-w-none sm:text-4xl md:text-7xl"
-  style={{
-    textShadow: "0 4px 14px rgba(0, 0, 0, 0.45)",
-  }}
->
-  Корпоративные подарки, которые запоминаются.
-</h1>
+          {/* Нижняя зелёная часть */}
+          <div className="absolute inset-x-0 bottom-0 min-h-[350px] bg-[#6f8f55] px-5 pb-12 pt-10 text-white">
+            <div className="mx-auto max-w-md">
+              <div className="mb-5 inline-flex rounded-full border border-white/30 bg-black/10 px-4 py-2 text-center text-xs text-white/90">
+                Премиальные сувениры · Дизайн · Производство · Брендирование
+              </div>
 
-            <p className="mt-4 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8 md:text-xl">
-              Разрабатываем и производим премиальные
-              сувениры, награды, корпоративные подарки
-              и брендированные решения под задачу бизнеса.
-            </p>
+              <h1 className="text-[34px] font-bold leading-[1.08]">
+                Корпоративные подарки, которые запоминаются.
+              </h1>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#constructor"
-                className="rounded-xl bg-white px-6 py-3.5 text-center font-semibold text-black transition hover:bg-neutral-200 sm:px-7 sm:py-4"
-              >
-                Подобрать подарок →
-              </a>
-
-              <a
-                href="#portfolio"
-                className="rounded-xl border border-white/40 bg-black/20 px-6 py-3.5 text-center font-semibold text-white backdrop-blur transition hover:bg-white/10 sm:px-7 sm:py-4"
-              >
-                Смотреть проекты
-              </a>
+              <p className="mt-4 text-base leading-7 text-white/90">
+                Разрабатываем и производим премиальные сувениры, награды,
+                корпоративные подарки и брендированные решения под задачу
+                бизнеса.
+              </p>
             </div>
+          </div>
+        </div>
 
-            <div className="mt-7 grid grid-cols-2 gap-5 border-t border-white/20 pt-6 sm:gap-6 sm:pt-7 md:max-w-2xl md:grid-cols-4">
-              
+        {/* TABLET / DESKTOP HERO — без изменений */}
+        <div className="relative hidden min-h-[560px] sm:block">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-[url('/images/background.jpg')]"
+          />
+
+          <div className="relative mx-auto flex min-h-[560px] max-w-7xl items-center px-5 py-16 sm:py-20 md:-translate-y-10 md:px-5 lg:-translate-y-15">
+            <div className="relative top-20 max-w-4xl text-white sm:top-16">
+              <div className="relative top-8 mb-8 inline-flex max-w-full rounded-full border border-white/30 bg-black/20 px-4 py-2 text-center text-xs text-white/90 backdrop-blur sm:mb-6 sm:text-sm">
+                Премиальные сувениры · Дизайн · Производство · Брендирование
+              </div>
+
+              <h1
+                className="max-w-[360px] text-[34px] font-bold leading-[1.08] sm:max-w-none sm:text-4xl md:text-7xl"
+                style={{
+                  textShadow: "0 4px 14px rgba(0, 0, 0, 0.45)",
+                }}
+              >
+                Корпоративные подарки, которые запоминаются.
+              </h1>
+
+              <p className="mt-4 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8 md:text-xl">
+                Разрабатываем и производим премиальные
+                сувениры, награды, корпоративные подарки
+                и брендированные решения под задачу бизнеса.
+              </p>
+
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="#constructor"
+                  className="rounded-xl bg-white px-6 py-3.5 text-center font-semibold text-black transition hover:bg-neutral-200 sm:px-7 sm:py-4"
+                >
+                  Подобрать подарок →
+                </a>
+
+                <a
+                  href="#portfolio"
+                  className="rounded-xl border border-white/40 bg-black/20 px-6 py-3.5 text-center font-semibold text-white backdrop-blur transition hover:bg-white/10 sm:px-7 sm:py-4"
+                >
+                  Смотреть проекты
+                </a>
+              </div>
             </div>
-
           </div>
         </div>
       </section>
