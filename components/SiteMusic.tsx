@@ -50,7 +50,7 @@ export default function SiteMusic() {
   return (
     <audio
       ref={audioRef}
-      src="/music.mp3"
+      src="/music/background.mp3"
       loop
       preload="auto"
       aria-hidden="true"
