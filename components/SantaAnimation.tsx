@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 export default function SantaAnimation() {
   const [visible, setVisible] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+  const [typedText, setTypedText] = useState("");
+
+  const message = "ХО-ХО-ХО! LogoArt дарит подарки! 🎅";
 
   useEffect(() => {
     const firstTimer = setTimeout(() => {
@@ -14,6 +17,7 @@ export default function SantaAnimation() {
     const interval = setInterval(() => {
       setVisible((prev) => !prev);
       setShowMessage(false);
+      setTypedText("");
     }, 15000);
 
     return () => {
@@ -21,6 +25,25 @@ export default function SantaAnimation() {
       clearInterval(interval);
     };
   }, []);
+
+  useEffect(() => {
+    if (!showMessage) {
+      setTypedText("");
+      return;
+    }
+
+    let index = 0;
+    const timer = setInterval(() => {
+      index += 1;
+      setTypedText(message.slice(0, index));
+
+      if (index >= message.length) {
+        clearInterval(timer);
+      }
+    }, 55);
+
+    return () => clearInterval(timer);
+  }, [showMessage]);
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[9999]">
@@ -34,15 +57,11 @@ export default function SantaAnimation() {
           transition-all
           duration-1000
           ease-in-out
-
           sm:bottom-0
           sm:left-0
-
-          ${
-            visible
-              ? "translate-x-0 translate-y-0 opacity-100"
-              : "-translate-x-full translate-y-10 opacity-0"
-          }
+          ${visible
+            ? "translate-x-0 translate-y-0 opacity-100"
+            : "-translate-x-full translate-y-10 opacity-0"}
         `}
         onClick={() => setShowMessage((prev) => !prev)}
       >
@@ -58,11 +77,14 @@ export default function SantaAnimation() {
         </div>
 
         {showMessage && (
-  <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full rounded-2xl bg-white px-5 py-3 text-center text-sm font-bold shadow-xl">
-    <div>ХО-ХО-ХО!</div>
-    <div className="mt-2">"LogoArt" дарит подарки!🎅</div>
-  </div>
-)}
+          <div
+            className="absolute left-[92px] top-[54px] z-10 w-[190px] text-left text-sm font-bold leading-5 text-white drop-shadow-[0_2px_5px_rgba(0,0,0,0.9)] sm:left-[128px] sm:top-[78px] sm:w-[245px] sm:text-base"
+            aria-live="polite"
+          >
+            <span>{typedText}</span>
+            <span className="ml-0.5 animate-pulse">|</span>
+          </div>
+        )}
       </div>
     </div>
   );
