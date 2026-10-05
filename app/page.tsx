@@ -1,21 +1,47 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { GiftConstructor } from "@/components/constructor/GiftConstructor";
 import { PortfolioCard } from "@/components/portfolio/PortfolioCard";
 import { MobileMenu } from "@/components/MobileMenu";
 import { WinterEffects } from "@/components/WinterEffects";
 import SantaAnimation from "@/components/SantaAnimation";
+import SiteMusic from "@/components/SiteMusic";
 
 export default function HomePage() {
+  const [headerVisible, setHeaderVisible] = useState(true);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY <= 20) {
+        setHeaderVisible(true);
+      } else if (currentScrollY > lastScrollY) {
+        setHeaderVisible(false);
+      } else {
+        setHeaderVisible(true);
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <main
       id="top"
       className="min-h-screen overflow-x-hidden bg-[#f7f7f5] text-neutral-950"
     >
       <WinterEffects />
+      <SiteMusic />
       <SantaAnimation />
       {/* =========================
           HEADER
       ========================= */}
-      <header className="fixed left-0 right-0 top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur">
+      <header className={`fixed left-0 right-0 top-0 z-50 border-b border-neutral-200 bg-white/95 shadow-sm backdrop-blur transition-transform duration-300 ${headerVisible ? "translate-y-0" : "-translate-y-full"}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-5 sm:py-5">
 
           {/* LOGO */}
@@ -96,7 +122,7 @@ export default function HomePage() {
           <div className="absolute left-1/2 top-[205px] z-10 flex w-[calc(100%-40px)] -translate-x-1/2 flex-col items-center gap-3">
             <a
               href="#constructor"
-              className="w-full max-w-[300px] rounded-xl bg-white px-5 py-3.5 text-center font-semibold text-black shadow-lg transition active:scale-[0.98]"
+              className="w-full max-w-[300px] rounded-xl border border-white/50 bg-black/20 px-5 py-3.5 text-center font-semibold text-white shadow-lg backdrop-blur transition active:scale-[0.98]"
             >
               Подобрать подарок
             </a>
