@@ -56,7 +56,7 @@ async function ollamaGenerate(prompt, images = []) {
       images,
       stream: false,
       format: "json",
-      options: { temperature: 0.15 }
+      options: { temperature: 0.1 }
     })
   });
   if (!response.ok) throw new Error("Ollama error: " + await response.text());
@@ -68,81 +68,141 @@ function imageBase64(file) {
   return fs.readFileSync(file).toString("base64");
 }
 
-function requireTempDir() {
-  return process.env.TEMP || process.env.TMP || ".";
+function chunk(items, size) {
+  const result = [];
+  for (let i = 0; i < items.length; i += size) result.push(items.slice(i, i + size));
+  return result;
 }
 
-const server = http.createServer(async (req, res) => {
-  if (req.method === "OPTIONS") return json(res, 204, {});
+async function analyzePhotoBatch(batch) {
+  const prompt = [
+    "Ты профессиональный редактор свадебного фотоальбома.",
+    "Проанализируй изображения. Верни только JSON без markdown.",
+    "Для каждого изображения укажи точное имя файла из списка.",
+    "Оцени: quality 0-100, composition 0-100, weddingValue 0-100.",
+    "Определи scene: preparation, ceremony, portrait, couple, walking, guests, details, party, architecture, other.",
+    "Определи orientation: landscape, portrait, square.",
+    "duplicateGroup — одинаковый/почти одинаковый кадр получает одинаковый короткий идентификатор.",
+    "hero=true только для действительно сильных кадров.",
+    "Не придумывай людей, события или имена.",
+    "Формат: {"photos":[{"name":"file.jpg","quality":90,"composition":88,"weddingValue":95,"scene":"couple","orientation":"landscape","duplicateGroup":"g1","hero":true}]}",
+    "",
+    "ФАЙЛЫ:"
+  ].concat(batch.map((p, i) => (i + 1) + ". " + p.name)).join("\n");
 
-  try {
-    if (req.url === "/health") {
-      return json(res, 200, {
-        connected: true,
-        folder: PHOTO_FOLDER,
-        corel: await corelRunning()
-      });
+  return ollamaGenerate(prompt, batch.map((p) => p.image));
+}
+
+async function buildAiAlbumPlan(allPhotos) {
+  if (allPhotos.length < 26) {
+    throw new Error("Нужно минимум 26 фотографий для 10 разворотов без повторов. Сейчас: " + allPhotos.length);
+  }
+
+  const analyses = [];
+  for (const batch of chunk(allPhotos, 12)) {
+    const result = await analyzePhotoBatch(batch);
+    if (Array.isArray(result.photos)) analyses.push(...result.photos);
+  }
+
+  const byName = new Map(allPhotos.map((p) => [p.name, p]));
+  const clean = analyses
+    .filter((p) => byName.has(p.name))
+    .map((p) => ({
+      ...p,
+      quality: Number(p.quality) || 0,
+      composition: Number(p.composition) || 0,
+      weddingValue: Number(p.weddingValue) || 0
+    }))
+    .sort((a, b) =>
+      (b.weddingValue + b.quality + b.composition) -
+      (a.weddingValue + a.quality + a.composition)
+    );
+
+  const unique = [];
+  const groups = new Set();
+  for (const p of clean) {
+    const key = p.duplicateGroup || p.name;
+    if (groups.has(key)) continue;
+    groups.add(key);
+    unique.push(p);
+  }
+
+  const fallback = allPhotos.map((p) => ({
+    name: p.name,
+    quality: 50,
+    composition: 50,
+    weddingValue: 50,
+    scene: "other",
+    orientation: "landscape",
+    duplicateGroup: p.name,
+    hero: false
+  }));
+
+  const candidates = unique.length >= 26 ? unique : fallback;
+  const scenes = ["preparation","ceremony","portrait","couple","walking","guests","details","party","architecture","other"];
+  const layouts = [
+    { layoutId: 1, count: 1 },
+    { layoutId: 2, count: 2 },
+    { layoutId: 3, count: 3 },
+    { layoutId: 4, count: 3 },
+    { layoutId: 5, count: 3 },
+    { layoutId: 6, count: 5 },
+    { layoutId: 7, count: 3 },
+    { layoutId: 8, count: 4 },
+    { layoutId: 9, count: 1 },
+    { layoutId: 10, count: 1 }
+  ];
+
+  const selected = [];
+  const used = new Set();
+  const take = (preferredScenes, count) => {
+    const result = [];
+    for (const p of candidates) {
+      if (used.has(p.name)) continue;
+      if (preferredScenes.includes(p.scene)) {
+        used.add(p.name);
+        result.push(p);
+        if (result.length === count) return result;
+      }
     }
-
-    if (req.url === "/layouts") {
-      const layouts = JSON.parse(fs.readFileSync(LAYOUTS_FILE, "utf8"));
-      return json(res, 200, layouts);
+    for (const p of candidates) {
+      if (used.has(p.name)) continue;
+      used.add(p.name);
+      result.push(p);
+      if (result.length === count) break;
     }
+    return result;
+  };
 
-    if (req.url === "/photos") {
-      if (!fs.existsSync(PHOTO_FOLDER)) return json(res, 404, { error: "Photo folder not found" });
+  const spreads = layouts.map((layout, index) => {
+    const preferred = [
+      [ "architecture", "couple", "walking" ],
+      [ "couple", "portrait", "walking" ],
+      [ "ceremony", "couple", "guests" ],
+      [ "walking", "architecture", "couple" ],
+      [ "portrait", "couple", "details" ],
+      [ "guests", "details", "party" ],
+      [ "portrait", "couple" ],
+      [ "ceremony", "guests", "couple" ],
+      [ "details", "portrait" ],
+      [ "couple", "architecture" ]
+    ][index];
+    const picked = take(preferred, layout.count);
+    selected.push(...picked);
+    return {
+      layoutId: layout.layoutId,
+      photos: picked.map((p) => p.name),
+      scenes: picked.map((p) => p.scene)
+    };
+  });
 
-      const photos = fs.readdirSync(PHOTO_FOLDER, { withFileTypes: true })
-        .filter((x) => x.isFile() && ALLOWED.has(path.extname(x.name).toLowerCase()))
-        .map((x) => ({
-          name: x.name,
-          path: safeFile(x.name),
-          url: "http://127.0.0.1:" + PORT + "/photo/" + encodeURIComponent(x.name),
-          size: fs.statSync(path.join(PHOTO_FOLDER, x.name)).size
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name, "ru"));
-
-      return json(res, 200, { photos });
-    }
-
-    if (req.method === "POST" && req.url === "/ai-plan") {
-      const body = await readBody(req);
-      const input = JSON.parse(body);
-      const photos = Array.isArray(input.photos) ? input.photos : [];
-      if (!photos.length) return json(res, 400, { error: "No photos supplied" });
-
-      const root = path.resolve(PHOTO_FOLDER);
-      const selected = photos.slice(0, 40).map((p) => {
-        const file = path.resolve(String(p.path || ""));
-        if (!file.startsWith(root + path.sep) || !fs.existsSync(file)) {
-          throw new Error("Invalid photo path: " + file);
-        }
-        return { name: path.basename(file), path: file, image: imageBase64(file) };
-      });
-
-      const prompt = [
-        "Ты AI-редактор свадебного фотоальбома.",
-        "Проанализируй переданные фотографии и верни ТОЛЬКО JSON.",
-        "Нужно создать план из 10 разных разворотов 600x300 мм.",
-        "Используй только имена из списка ниже. Индекс изображения соответствует индексу в списке.",
-        "СПИСОК ФОТО:",
-        ...selected.map((p, i) => (i + 1) + ". " + p.name),
-        "Не повторяй одну фотографию более одного раза.",
-        "Выбирай сильные кадры: портреты, пара, прогулка, церемония, гости, детали.",
-        "Для каждого разворота выбери layoutId от 1 до 10.",
-        "Количество photos должно соответствовать количеству slots выбранного layout.",
-        "Не используй одинаковые layoutId более одного раза.",
-        "Формат ответа:",
-        '{"spreads":[{"layoutId":1,"photos":["file.jpg"]},...]}'
-      ].join("\n");
-
-      const result = await ollamaGenerate(prompt, selected.map((p) => p.image));
-      return json(res, 200, {
-        model: process.env.OLLAMA_VISION_MODEL || "qwen2.5vl:7b",
-        plan: result,
-        photos: selected.map(({ image, ...p }) => p)
-      });
-    }
+  return {
+    spreads,
+    selectedCount: selected.length,
+    analyzedCount: analyses.length,
+    model: process.env.OLLAMA_VISION_MODEL || "qwen2.5vl:7b"
+  };
+}
 
     if (req.method === "POST" && req.url === "/create-album") {
       const body = await readBody(req);
