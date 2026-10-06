@@ -85,7 +85,7 @@ async function analyzePhotoBatch(batch) {
     "duplicateGroup — одинаковый/почти одинаковый кадр получает одинаковый короткий идентификатор.",
     "hero=true только для действительно сильных кадров.",
     "Не придумывай людей, события или имена.",
-    "Формат: {"photos":[{"name":"file.jpg","quality":90,"composition":88,"weddingValue":95,"scene":"couple","orientation":"landscape","duplicateGroup":"g1","hero":true}]}",
+    \'Формат: {"photos":[{"name":"file.jpg","quality":90,"composition":88,"weddingValue":95,"scene":"couple","orientation":"landscape","duplicateGroup":"g1","hero":true}]}\',
     "",
     "ФАЙЛЫ:"
   ].concat(batch.map((p, i) => (i + 1) + ". " + p.name)).join("\n");
@@ -139,7 +139,6 @@ async function buildAiAlbumPlan(allPhotos) {
   }));
 
   const candidates = unique.length >= 26 ? unique : fallback;
-  const scenes = ["preparation","ceremony","portrait","couple","walking","guests","details","party","architecture","other"];
   const layouts = [
     { layoutId: 1, count: 1 },
     { layoutId: 2, count: 2 },
@@ -202,6 +201,10 @@ async function buildAiAlbumPlan(allPhotos) {
     analyzedCount: analyses.length,
     model: process.env.OLLAMA_VISION_MODEL || "qwen2.5vl:7b"
   };
+}
+
+function requireTempDir() {
+  return process.env.TEMP || process.env.TMP || ".";
 }
 
     if (req.method === "POST" && req.url === "/ai-plan") {
