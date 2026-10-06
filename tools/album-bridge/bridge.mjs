@@ -1,11 +1,11 @@
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
-import { execFile } from "node:child_process";
+import { execFile } from "node:child_process";\nimport { fileURLToPath } from "node:url";
 
 const PORT = 17321;
 const PHOTO_FOLDER = "C:\\Ерлан\\Работы Ерлана\\Свадебный альбом\\photo рест";
-const ALLOWED = new Set([".jpg", ".jpeg", ".png", ".webp"]);\nconst BRIDGE_ROOT = path.resolve(new URL(".", import.meta.url).pathname.replace(/^\//, ""));\nconst LAYOUTS_FILE = path.join(BRIDGE_ROOT, "layouts.json");\nconst CREATE_SCRIPT = path.join(BRIDGE_ROOT, "create-album.ps1");
+const ALLOWED = new Set([".jpg", ".jpeg", ".png", ".webp"]);\nconst BRIDGE_ROOT = path.dirname(fileURLToPath(import.meta.url));\nconst LAYOUTS_FILE = path.join(BRIDGE_ROOT, "layouts.json");\nconst CREATE_SCRIPT = path.join(BRIDGE_ROOT, "create-album.ps1");
 
 function json(res, status, body) {
   res.writeHead(status, {
