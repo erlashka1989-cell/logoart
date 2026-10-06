@@ -45,6 +45,29 @@ function corelRunning() {
   });
 }
 
+async function ollamaGenerate(prompt, images = []) {
+  const model = process.env.OLLAMA_VISION_MODEL || "qwen2.5vl:7b";
+  const response = await fetch("http://127.0.0.1:11434/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model,
+      prompt,
+      images,
+      stream: false,
+      format: "json",
+      options: { temperature: 0.15 }
+    })
+  });
+  if (!response.ok) throw new Error("Ollama error: " + await response.text());
+  const data = await response.json();
+  return JSON.parse(data.response);
+}
+
+function imageBase64(file) {
+  return fs.readFileSync(file).toString("base64");
+}
+
 function requireTempDir() {
   return process.env.TEMP || process.env.TMP || ".";
 }
@@ -80,6 +103,43 @@ const server = http.createServer(async (req, res) => {
         .sort((a, b) => a.name.localeCompare(b.name, "ru"));
 
       return json(res, 200, { photos });
+    }
+
+    if (req.method === "POST" && req.url === "/ai-plan") {
+      const body = await readBody(req);
+      const input = JSON.parse(body);
+      const photos = Array.isArray(input.photos) ? input.photos : [];
+      if (!photos.length) return json(res, 400, { error: "No photos supplied" });
+
+      const root = path.resolve(PHOTO_FOLDER);
+      const selected = photos.slice(0, 40).map((p) => {
+        const file = path.resolve(String(p.path || ""));
+        if (!file.startsWith(root + path.sep) || !fs.existsSync(file)) {
+          throw new Error("Invalid photo path: " + file);
+        }
+        return { name: path.basename(file), path: file, image: imageBase64(file) };
+      });
+
+      const prompt = [
+        "Ты AI-редактор свадебного фотоальбома.",
+        "Проанализируй переданные фотографии и верни ТОЛЬКО JSON.",
+        "Нужно создать план из 10 разных разворотов 600x300 мм.",
+        "Используй только имена переданных файлов.",
+        "Не повторяй одну фотографию более одного раза.",
+        "Выбирай сильные кадры: портреты, пара, прогулка, церемония, гости, детали.",
+        "Для каждого разворота выбери layoutId от 1 до 10.",
+        "Количество photos должно соответствовать количеству slots выбранного layout.",
+        "Не используй одинаковые layoutId более одного раза.",
+        "Формат ответа:",
+        '{"spreads":[{"layoutId":1,"photos":["file.jpg"]},...]}'
+      ].join("\n");
+
+      const result = await ollamaGenerate(prompt, selected.map((p) => p.image));
+      return json(res, 200, {
+        model: process.env.OLLAMA_VISION_MODEL || "qwen2.5vl:7b",
+        plan: result,
+        photos: selected.map(({ image, ...p }) => p)
+      });
     }
 
     if (req.method === "POST" && req.url === "/create-album") {
