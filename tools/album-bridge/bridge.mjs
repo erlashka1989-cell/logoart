@@ -204,6 +204,27 @@ async function buildAiAlbumPlan(allPhotos) {
   };
 }
 
+    if (req.method === "POST" && req.url === "/ai-plan") {
+      const body = await readBody(req);
+      const input = JSON.parse(body);
+      const requested = Array.isArray(input.photos) ? input.photos : [];
+      const root = path.resolve(PHOTO_FOLDER);
+      const allPhotos = requested.map((p) => {
+        const file = path.resolve(String(p.path || ""));
+        if (!file.startsWith(root + path.sep) || !fs.existsSync(file)) {
+          throw new Error("Invalid photo path: " + file);
+        }
+        return { name: path.basename(file), path: file, image: imageBase64(file) };
+      });
+      const result = await buildAiAlbumPlan(allPhotos);
+      return json(res, 200, {
+        model: result.model,
+        analyzedCount: result.analyzedCount,
+        selectedCount: result.selectedCount,
+        plan: { spreads: result.spreads }
+      });
+    }
+
     if (req.method === "POST" && req.url === "/create-album") {
       const body = await readBody(req);
       const plan = JSON.parse(body);
